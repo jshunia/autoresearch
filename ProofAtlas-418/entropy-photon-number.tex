@@ -94,8 +94,7 @@ $c_j=\sqrt{\eta}\,a_j+\sqrt{1-\eta}\,b_j$, $1\le j\le n$. Then
 The modes within either input may be entangled. An infinite value of
 $S(C)$ satisfies \eqref{eq:epni} in the extended reals. These are the
 hypotheses of Problem~418 in ProofAtlas~\cite{atlas}.
-The Lean proof of Theorem~\ref{thm:main} is available at
-\url{https://github.com/jshunia/autoresearch}.
+For the Lean proof of Theorem~\ref{thm:main}, see~\cite{lean}.
 
 The difficulty in deducing Theorem~\ref{thm:main} by approximation is
 at the output port. If $C_r\to C$ in trace norm, lower semicontinuity
@@ -284,7 +283,7 @@ the vacuum cases. Taking the $n$-fold product gives equality.
 
 \section*{AI Assistance Disclosure}
 
-OpenAI's GPT 6.2 Astra was used in an autoresearch loop and reported this discovery to the author.
+OpenAI's GPT-6.2 Astra was used in an autoresearch loop and reported this discovery to the author.
 
 \begingroup\small
 \begin{thebibliography}{9}
@@ -303,6 +302,12 @@ Release preprint, September 24, 2026.
 \bibitem{atlas}
 ProofAtlas, \emph{Entropy photon-number inequality}, Problem~418,
 2026. \href{https://www.proofatlas.ai/open-problems/\#problem-top500-omission-w045049-entropy-photon-number-inequality}{Problem statement}.
+
+\bibitem{lean}
+J.~M.~Shunia, \emph{Lean formalization of the entropy photon-number
+inequality without an energy assumption}, GitHub repository
+\texttt{jshunia/autoresearch} (2026), commit \texttt{2759bdf}.
+\href{https://github.com/jshunia/autoresearch/blob/2759bdf65c14f9d86906203fb697b69cd6572ff1/ProofAtlas-418/lean/FiniteEntropyEPnI.lean\#L41}{Theorem \texttt{finiteEntropyEPnI}}.
 
 \bibitem{simon}
 B.~Simon, \emph{Convergence theorems for entropy}, appendix to
