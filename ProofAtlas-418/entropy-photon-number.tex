@@ -1,0 +1,326 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!40!black,citecolor=blue!40!black,
+            urlcolor=blue!40!black]{hyperref}
+\hypersetup{
+  pdftitle={The entropy photon-number inequality without an energy assumption},
+  pdfauthor={Joseph M. Shunia},
+  pdfsubject={Entropy of independent bosonic inputs under beam-splitter mixing},
+  pdfkeywords={entropy photon-number inequality, bosonic Gaussian channels, von Neumann entropy}
+}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\numberwithin{equation}{section}
+\DeclareMathOperator{\Tr}{Tr}
+\newcommand{\Fock}{\mathcal F_n}
+\setlength{\emergencystretch}{1.5em}
+\addtolength{\skip\footins}{6pt}
+
+\title{The entropy photon-number inequality\\without an energy assumption}
+\author{Joseph M. Shunia\thanks{Independent researcher, Ann Arbor, Michigan, United States.
+  Email: \href{mailto:jshunia@gmail.com}{\texttt{jshunia@gmail.com}}.}}
+\date{November 21, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We deduce the entropy photon-number inequality for two independent
+bosonic inputs of finite von Neumann entropy from OpenAI's finite-energy
+theorem. The result holds for any finite number of modes, even when
+both inputs have infinite mean photon number. Applying the
+same photon-number filter at both ports of the beam splitter gives an
+operator bound on the retained marginal and hence an upper bound on its
+entropy. At transmissivities strictly between zero and one, an input of
+infinite entropy forces the output entropy to be infinite. We also
+obtain the sharp minimum output entropy of a thermal attenuator at
+prescribed input entropy, without an energy constraint.
+\end{abstract}
+
+\section{Introduction}
+
+Mix two independent thermal beams of mean photon numbers $a$ and $b$
+per mode. The retained beam is thermal with mean photon number
+$\eta a+(1-\eta)b$ at transmissivity $\eta$. Guha, Erkmen, and
+Shapiro conjectured that this pair minimizes the output entropy among
+all independent inputs with the same respective entropies~\cite{ges}.
+OpenAI proved the conjecture for any finite number of modes when both
+inputs have finite mean photon number~\cite[Theorem~1.1]{oai}.
+The energy hypothesis already excludes a simple one-mode state. In the
+photon-number basis, give $k$ photons probability
+\[
+ p_k=\frac{6}{\pi^2(k+1)^2},\qquad k=0,1,\ldots.
+\]
+Its entropy is finite since $\sum_{k\ge1}\log(k+1)/(k+1)^2$ converges.
+Its mean photon number is infinite since $k p_k$ is asymptotic to
+$6/(\pi^2 k)$.
+
+Write $S(\rho)=-\Tr(\rho\log\rho)\in[0,\infty]$ for the von Neumann
+entropy, using natural logarithms and $0\log 0=0$. The entropy of a
+one-mode thermal state of mean photon number $x$ is
+\[
+ g(x)=(1+x)\log(1+x)-x\log x,\qquad x\ge0.
+\]
+The function $g$ increases continuously from zero to infinity. Thus
+$g^{-1}(S(\rho)/n)$ is the mean photon number per mode of the product
+of $n$ identical thermal states having the same entropy as $\rho$.
+
+\begin{theorem}\label{thm:main}
+Let $A$ and $B$ be states of $n$ bosonic modes each, with $1\le n<\infty$
+and $S(A),S(B)<\infty$. Mix the product state $A\otimes B$ at a beam
+splitter of transmissivity $0\le\eta\le1$. If $a_j,b_j$ are the input
+annihilation operators, let $C$ be the state of the modes
+$c_j=\sqrt{\eta}\,a_j+\sqrt{1-\eta}\,b_j$, $1\le j\le n$. Then
+\begin{equation}\label{eq:epni}
+ S(C)\ \ge\ n\,g\!\left(
+   \eta\,g^{-1}\!\left(\frac{S(A)}{n}\right)
+   +(1-\eta)\,g^{-1}\!\left(\frac{S(B)}{n}\right)\right).
+\end{equation}
+\end{theorem}
+
+The modes within either input may be entangled. An infinite value of
+$S(C)$ satisfies \eqref{eq:epni} in the extended reals. These are the
+hypotheses of Problem~418 in ProofAtlas~\cite{atlas}.
+The Lean proof of Theorem~\ref{thm:main} is available at
+\url{https://github.com/jshunia/autoresearch}.
+
+The difficulty in deducing Theorem~\ref{thm:main} by approximation is
+at the output port. If $C_r\to C$ in trace norm, lower semicontinuity
+gives $S(C)\le\liminf S(C_r)$. To pass a lower bound on $S(C_r)$ to
+$S(C)$ one needs an upper bound on the approximating entropies. We
+obtain it by filtering both input ports by $r^N$, where $N$ counts
+photons. Since the beam splitter conserves total photon number, the
+same product filter acts on the two outputs. The filter on the
+discarded port can then be removed at the cost of an operator
+inequality on the retained port.
+
+\section{An entropy estimate for filtered states}
+
+For a positive trace-class operator $T$ of trace at most one, put
+\[
+ \Phi(T)=\Tr f(T),\qquad f(t)=t(1-\log t)\quad(0<t\le1),\qquad f(0)=0.
+\]
+The added trace term makes $f$ increasing on the whole state spectrum.
+The following estimate is an elementary form of the spectral
+domination used in Simon's convergence theorems for
+entropy~\cite[Appendix, Theorems~A.2--A.4]{simon}.
+
+\begin{lemma}\label{lem:entropy}
+Let $\rho$ and $\sigma$ be states on a separable Hilbert space, let
+$D$ be a contraction, and suppose $q\sigma\le D\rho D^*$ for some
+$0<q\le1$. Then
+\begin{equation}\label{eq:bound}
+ q\bigl(1+S(\sigma)-\log q\bigr)\le 1+S(\rho).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Write $\lambda_j(T)$ for the eigenvalues of a positive compact
+operator, in decreasing order with multiplicity, padded by zeros in
+the finite-rank case. The min--max principle gives
+$\lambda_j(q\sigma)\le\lambda_j(D\rho D^*)$ for each $j$.
+Taking $K=D\rho^{1/2}$, we have $KK^*=D\rho D^*$ and
+$K^*K=\rho^{1/2}D^*D\rho^{1/2}\le\rho$. The nonzero eigenvalues of
+$KK^*$ and $K^*K$ agree, so a second application of min--max gives
+$\lambda_j(q\sigma)\le\lambda_j(\rho)$. Applying $f$ and summing the
+nonnegative terms yields $\Phi(q\sigma)\le\Phi(\rho)$. Since
+$\Phi(q\sigma)=q(1+S(\sigma)-\log q)$ and $\Phi(\rho)=1+S(\rho)$,
+this proves \eqref{eq:bound}, including the case of an infinite trace
+of $f(\rho)$.
+\end{proof}
+
+In particular, suppose $\sigma_r\to\rho$ in trace norm and
+$q_r\sigma_r\le D_r\rho D_r^*$ with contractions $D_r$ and
+$0<q_r\le1$ tending to one. If $S(\rho)<\infty$, \eqref{eq:bound} gives
+$\limsup S(\sigma_r)\le S(\rho)$. Lower semicontinuity gives
+$S(\rho)\le\liminf S(\sigma_r)$. Indeed, trace-norm convergence implies
+convergence of each ordered eigenvalue by min--max, and Fatou's
+lemma applies to the nonnegative terms
+$-\lambda_j(\sigma_r)\log\lambda_j(\sigma_r)$. The same lower
+bound suffices when $S(\rho)=\infty$. Thus in either case
+\begin{equation}\label{eq:continuity}
+ S(\sigma_r)\longrightarrow S(\rho)\quad\text{in }[0,\infty].
+\end{equation}
+
+\section{Photon-number damping at the two ports}
+
+On the $n$-mode Fock space $\Fock$, let $P_k$ be the projection
+onto the subspace of total photon number $k$, so
+$N=\sum_{k\ge0}kP_k$. For $0<r<1$ and a state $\rho$ define
+\begin{equation}\label{eq:filter}
+ D_r=r^N,\qquad p_r(\rho)=\Tr(D_r\rho D_r),\qquad
+ \rho_r=\frac{D_r\rho D_r}{p_r(\rho)}.
+\end{equation}
+Writing $w_k=\Tr(P_k\rho)$, we have
+$p_r(\rho)=\sum_{k\ge0}r^{2k}w_k>0$ and $p_r(\rho)\uparrow1$ as
+$r\uparrow1$. Each $\rho_r$ has finite mean photon number, since
+\[
+ \Tr(N\rho_r)=\frac{\sum_{k\ge0}k r^{2k}w_k}{p_r(\rho)}
+ \le\frac{\sup_{k\ge0}k r^{2k}}{p_r(\rho)}<\infty.
+\]
+For trace-norm convergence, factor $\rho=\rho^{1/2}\rho^{1/2}$ and
+use the Hilbert--Schmidt inequality to obtain
+\[
+ \|D_r\rho D_r-\rho\|_1\le2\|(I-D_r)\rho^{1/2}\|_2,\qquad
+ \|(I-D_r)\rho^{1/2}\|_2^2=\sum_{k\ge0}(1-r^k)^2w_k\longrightarrow0.
+\]
+Hence $\rho_r\to\rho$ in trace norm. Taking $q_r=p_r(\rho)$ in
+\eqref{eq:continuity} gives $S(\rho_r)\to S(\rho)$.
+
+Let $U_\eta$ be the beam-splitter unitary on $\Fock\otimes\Fock$, let
+$\omega=U_\eta(A\otimes B)U_\eta^*$, and take the first output port
+as the retained one, so $C=\Tr_2\omega$. Write $C_r$ for the output
+from the independently filtered inputs $A_r,B_r$, and set
+$q_r=p_r(A)p_r(B)$. In general $C_r$ differs from the state obtained
+by filtering $C$ alone.
+
+\begin{proposition}\label{prop:output}
+For every $0<r<1$,
+\begin{equation}\label{eq:order}
+ 0\le q_r C_r\le D_r C D_r.
+\end{equation}
+Consequently $S(C_r)\to S(C)$ in $[0,\infty]$ as $r\uparrow1$.
+\end{proposition}
+
+\begin{proof}
+The unitary $U_\eta$ preserves each eigenspace of
+$N\otimes I+I\otimes N$. On the eigenspace of total number $m$,
+$D_r\otimes D_r$ is multiplication by $r^m$. It therefore commutes
+with $U_\eta$, and
+\[
+ q_r C_r=\Tr_2\bigl[(D_r\otimes D_r)\omega(D_r\otimes D_r)\bigr].
+\]
+Put $E_r=(I-D_r^2)^{1/2}$. For any bounded test operator $H$ on the
+first port, the pairing of $D_r C D_r-q_r C_r$ with $H$ is
+$\Tr[\omega(D_r H D_r\otimes E_r^2)]$. Thus
+\[
+ D_r C D_r-q_r C_r
+ =\Tr_2\bigl[(D_r\otimes E_r)\omega(D_r\otimes E_r)\bigr]\ge0.
+\]
+By Lemma~\ref{lem:entropy}, \eqref{eq:order} gives the upper bound
+$q_r(1+S(C_r)-\log q_r)\le1+S(C)$. The input products converge in
+trace norm because $A_r\to A$ and $B_r\to B$ in that norm. Unitary
+conjugation and partial trace give $C_r\to C$ in trace norm, so
+\eqref{eq:continuity} applies with $q_r\to1$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Both filtered inputs have finite mean photon number. Their joint
+output has finite total mean photon number by conservation, so each
+marginal has finite entropy by the Gibbs bound~\cite[Lemma~2.2]{oai}.
+The finite-energy inequality~\cite[Theorem~1.1]{oai} therefore gives
+\begin{equation}\label{eq:regularized}
+ S(C_r)\ge n\,g\!\left(
+ \eta\,g^{-1}\!\left(\frac{S(A_r)}{n}\right)
+ +(1-\eta)\,g^{-1}\!\left(\frac{S(B_r)}{n}\right)\right).
+\end{equation}
+By \eqref{eq:filter} and \eqref{eq:continuity} the input entropies
+converge to $S(A)$ and $S(B)$. Letting $r\uparrow1$ and using the
+continuity of $g$ and $g^{-1}$ on the right and
+Proposition~\ref{prop:output} on the left proves \eqref{eq:epni}.
+\end{proof}
+
+\begin{corollary}\label{cor:infinite}
+Suppose $A$ and $B$ are independent and $0<\eta<1$. If $S(A)=\infty$
+or $S(B)=\infty$, then $S(C)=\infty$.
+\end{corollary}
+
+\begin{proof}
+The filtered inputs have finite energy, so \eqref{eq:regularized}
+applies for every $0<r<1$. If $S(A)=\infty$, then $S(A_r)\to\infty$.
+Since $\eta>0$ and
+$g^{-1}(s)\to\infty$ as $s\to\infty$, the right side of
+\eqref{eq:regularized} tends to infinity regardless of $S(B_r)$.
+Proposition~\ref{prop:output} gives the claim. If $S(B)=\infty$ use
+$1-\eta>0$. At $\eta=0$ or $1$ the retained port carries just one
+input, so the restriction on $\eta$ is necessary.
+\end{proof}
+
+\section{The minimum for a thermal attenuator}
+
+Let $\tau_x$ denote the one-mode thermal state with mean photon number
+$x\ge0$. Its photon counts have the geometric distribution of mean $x$,
+with $\tau_0$ the vacuum. Let $\mathcal E_{\eta,b}$ be the one-mode
+channel obtained by mixing the input with an independent copy of
+$\tau_b$ and retaining the first output. For one mode, De Palma,
+Trevisan, and Giovannetti proved the constrained minimum-output-entropy
+theorem for phase-covariant Gaussian channels~\cite{dtg}. Multimode
+results include the entanglement-breaking case~\cite{depalma} and
+the heating range~\cite{bm}. OpenAI derived the following minimum over
+finite-energy competitors~\cite[Corollary~1.2]{oai}.
+
+\begin{corollary}\label{cor:thermal}
+For $1\le n<\infty$, $a,b\ge0$, and $0\le\eta\le1$,
+\[
+ \min_{\substack{\rho\ \text{on }\Fock\\ S(\rho)=n g(a)}}
+ S\!\left(\mathcal E_{\eta,b}^{\otimes n}(\rho)\right)
+ = n\,g\bigl(\eta a+(1-\eta)b\bigr).
+\]
+The product thermal input $\tau_a^{\otimes n}$ attains the minimum.
+\end{corollary}
+
+\begin{proof}
+The environment is $\tau_b^{\otimes n}$ and has entropy $n g(b)$.
+Theorem~\ref{thm:main} gives the stated lower bound for every input
+of entropy $n g(a)$. For attainment, the thermal mixing
+identity~\cite[Proposition~2.3]{oai} gives
+$\mathcal E_{\eta,b}(\tau_a)=\tau_{\eta a+(1-\eta)b}$, including
+the vacuum cases. Taking the $n$-fold product gives equality.
+\end{proof}
+
+
+\section*{AI Assistance Disclosure}
+
+OpenAI's GPT 6.2 Astra was used in an autoresearch loop and reported this discovery to the author.
+
+\begingroup\small
+\begin{thebibliography}{9}
+
+\bibitem{ges}
+S.~Guha, B.~I.~Erkmen, and J.~H.~Shapiro,
+\emph{The entropy photon-number inequality and its consequences},
+2008 Information Theory and Applications Workshop, IEEE (2008),
+128--130. \href{https://doi.org/10.1109/ITA.2008.4601037}{doi:10.1109/ITA.2008.4601037}.
+
+\bibitem{oai}
+OpenAI, \emph{The entropy photon-number inequality}, OpenAI Math
+Release preprint, September 24, 2026.
+\href{https://github.com/openai/math/blob/4eaee87548250b2682affda7d05d947c05554bae/preprints/The-entropy-photon-number-inequality-September-24-2026/paper.pdf}{Manuscript}.
+
+\bibitem{atlas}
+ProofAtlas, \emph{Entropy photon-number inequality}, Problem~418,
+2026. \href{https://www.proofatlas.ai/open-problems/\#problem-top500-omission-w045049-entropy-photon-number-inequality}{Problem statement}.
+
+\bibitem{simon}
+B.~Simon, \emph{Convergence theorems for entropy}, appendix to
+E.~H.~Lieb and M.~B.~Ruskai, \emph{Proof of the strong subadditivity of
+quantum-mechanical entropy}, Les rencontres physiciens-math\'ematiciens
+de Strasbourg--RCP25 \textbf{19} (1973), expos\'e no.~5.
+\href{https://www.numdam.org/item/RCP25_1973__19__A5_0/}{Numdam}.
+
+\bibitem{dtg}
+G.~De Palma, D.~Trevisan, and V.~Giovannetti,
+\emph{Gaussian states minimize the output entropy of one-mode quantum
+Gaussian channels}, Phys. Rev. Lett. \textbf{118} (2017), 160503.
+\href{https://doi.org/10.1103/PhysRevLett.118.160503}{doi:10.1103/PhysRevLett.118.160503}.
+
+\bibitem{depalma}
+G.~De Palma, \emph{New lower bounds to the output entropy of multi-mode
+quantum Gaussian channels}, IEEE Trans. Inform. Theory \textbf{65}
+(2019), 5959--5968. \href{https://doi.org/10.1109/TIT.2019.2914434}{doi:10.1109/TIT.2019.2914434}.
+
+\bibitem{bm}
+S.~Beigi and H.~Mehrabi, \emph{From qubit tensorization to Gaussian
+optimizers in bosonic systems}, preprint (2026).
+\href{https://arxiv.org/abs/2610.28902}{arXiv:2610.28902}.
+
+\end{thebibliography}
+\endgroup
+
+\end{document}
