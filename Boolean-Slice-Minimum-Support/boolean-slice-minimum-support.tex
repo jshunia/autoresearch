@@ -1,0 +1,786 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,tabularx}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!40!black,citecolor=blue!40!black,
+            urlcolor=blue!40!black]{hyperref}
+
+\newcommand{\manuscripttitle}{Minimum support of Boolean functions on a slice}
+\newcommand{\manuscriptkeywords}{Boolean function, Johnson scheme, minimum support, inclusion matrix, uniform layer}
+\hypersetup{
+  pdftitle={Minimum support of Boolean functions on a slice},
+  pdfauthor={Joseph M. Shunia},
+  pdfsubject={Extremal Boolean families on uniform layers},
+  pdfkeywords={\manuscriptkeywords}
+}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\numberwithin{equation}{section}
+\setlength{\emergencystretch}{1.5em}
+\addtolength{\skip\footins}{6pt}
+
+\title{\vspace{-1.5\baselineskip}%
+  \manuscripttitle}
+\author{Joseph M. Shunia\thanks{Independent researcher, Ann Arbor, Michigan, United States.
+  Email: \href{mailto:jshunia@gmail.com}{\texttt{jshunia@gmail.com}}.}}
+\date{November 22, 2026}
+
+\begin{document}
+\maketitle
+\vspace{-\baselineskip}
+
+\begin{abstract}
+We determine the minimum support of a nonzero Boolean function of degree at most $d$ on a
+uniform layer in several ranges of the conjecture of Kiermaier, Mannaert and Wassermann. We
+prove their formula at degree two, at all widths at most six, and for every fixed degree on
+sufficiently large ground sets. We also classify the minimizers one and two degrees below the
+width. For fixed degree a density gap on the cube determines the candidate families. Near the
+maximum degree an exact count on random matching cubes gives the extremizers and sharp
+row-deletion thresholds for inclusion matrices.
+\\[2mm]
+{\bf 2020 Mathematics Subject Classification:} 05D05 (primary), 05E30, 06E30 (secondary).
+\\[2mm]
+{\bf Keywords:} \manuscriptkeywords.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+Choose exactly five of ten objects. Requiring two specified objects to be chosen accepts 56 of
+the 252 possibilities. Requiring three specified objects to be either all chosen or all
+omitted accepts only 42. Both rules are quadratic. For the second rule the indicator in the
+three membership bits is $1-x-y-z+xy+xz+yz$. Kiermaier, Mannaert and Wassermann calculated
+this example and proposed an exact law for every degree and every layer \cite[Section 7]{kmw}.
+
+Write $[n]=\{1,\ldots,n\}$. The $k$th layer $J(n,k)$ consists of its $k$-element subsets,
+represented by membership bits $x_1,\ldots,x_n$. Its width is $\ell=\min(k,n-k)$. A family has
+degree at most $d$ if a real polynomial of total degree at most $d$ agrees with its indicator
+at every point of the layer. Let $M_{d}(n,k)$ be the minimum cardinality of a nonempty such
+family. Replacing each set by its complement lets us assume $k\le n/2$. A $d$-pencil consists
+of the sets containing a specified $d$-set.
+
+Kiermaier, Mannaert and Wassermann's Conjecture~7 predicts the pencil size except on the
+middle layer at even degree below the width. There the indicator that $d+1$ specified bits are
+all equal has degree at most $d$, because its two highest-degree terms cancel. Define the
+proposed minimum by
+\begin{equation}\label{eq:minimum}
+B_d(n,k)=
+\begin{cases}
+2\binom{2k-d-1}{k}, & n=2k,\ d\text{ even},\ d<k,\\[2pt]
+\binom{n-d}{\ell-d}, & \text{otherwise}.
+\end{cases}
+\end{equation}
+\begin{theorem}\label{thm:main}
+
+Let $0\le d\le\ell$. Then $M_d(n,k)=B_d(n,k)$ in each of the following ranges:
+\begin{enumerate}\setlength{\itemsep}{0pt}
+\item $d=2$, or $\ell\le6$.
+\item $\ell\ge B^d$ for an absolute constant $B>1$. For every fixed $d$ the equality also holds for all $k$ once $n\ge N(d)$.
+\item $\ell-d\in\{1,2\}$. It also holds when $n=2k$, $k\ge3$ is odd and $d=k-3$.
+\end{enumerate}
+\end{theorem}
+
+At fixed degree the proof starts with the junta theorem of Filmus and Ihringer \cite{fi}. We
+identify the smallest cube supports and use the first correction to the middle-layer measure
+to distinguish them. For fixed small widths we use the real inclusion-matrix theorem of Grosu,
+Person and Szab\'o \cite{gps}. When $d$ is close to the width, the number of coordinates
+involved is no longer bounded. Random matching restrictions also occur in the polynomial
+distance lemma of Amireddy, Behera, Srinivasan and Sudan \cite{abss}. Here the inclusion
+probability of each set depends only on its distance from a chosen support point. Keeping that
+probability gives an exact counting identity and determines the extremizers.
+
+\subsection{Equality for fixed degree}\label{sec:fixed}
+
+Assume $k\le n/2$. In the large-width and large-ground-set ranges of
+Theorem~\ref{thm:main}(2), the following list exhausts equality for $d\ge1$, up to
+permutations of $[n]$.
+
+\begin{center}\normalfont
+\begin{tabularx}{\linewidth}{@{}llX@{}}
+\toprule
+Layer & Degree & Minimum families \\
+\midrule
+$n=2k$ & even & All of $d+1$ specified bits agree. \\
+$n=2k+1$ & even & A $d$-pencil, or all of $d+1$ specified bits agree. \\
+$n=2k$ & odd & A $d$-pencil or its complement image. Alternatively, one bit is prescribed and $d$ other specified bits all agree. \\
+All other layers & either & A $d$-pencil. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+For $d=1$ the condition that a single other bit agrees with itself is vacuous. For $d=0$ the
+only nonempty family is the whole layer. For $d=\ell$ the minimum is one. The thresholds can
+be enlarged so that $d=k$ occurs in the theorem only on the unbalanced fixed-width tail.
+
+\begin{theorem}\label{thm:stability}
+
+Fix $d\ge1$ and $\epsilon>0$. Along any sequence with $n\to\infty$ and $k/n\to1/2$, every
+nonempty degree-at-most-$d$ family of density at most $(2-\epsilon)2^{-d}$ eventually has this
+form. Fix $h$ bits, and on each of several disjoint odd blocks of size $r_j\ge3$ require one
+of two complementary bit patterns. The fixed bits are disjoint from all blocks and
+\[
+h+\sum_j(r_j-1)=d.
+\]
+
+Conversely every such pattern has degree at most $d$ and density $(1+o(1))2^{-d}$ in this
+limit. A pencil of degree $d-1$ has limiting density $2\cdot 2^{-d}$, so the factor two is
+sharp.
+\end{theorem}
+
+The two thresholds in Theorem~\ref{thm:main}(2) allow the equality list above to omit finite
+exceptions. For example, at $(n,k,d)=(8,4,3)$ one can independently complement members of a
+pencil. Section~\ref{sec:high} describes exactly when this freedom occurs.
+
+\section{Minimum support on a Boolean cube}\label{sec:cube}
+
+\begin{lemma}\label{lem:cube}
+
+On the uniform Boolean cube the density of a nonzero Boolean polynomial of degree at most $d$
+is a positive integer multiple of $2^{-d}$. Equality at $2^{-d}$ holds precisely for the fixed
+bits and complementary odd blocks described in Theorem~\ref{thm:stability}.
+\end{lemma}
+
+\begin{proof}
+
+A Boolean function $F$ on a full cube has integer multilinear coefficients $c_S$, by iterated
+finite differences at zero. Thus a nonzero function of degree at most $d$ has uniform density
+$\sum_S c_S2^{-|S|}$ equal to a positive multiple of $2^{-d}$.
+
+Suppose that the density is $2^{-d}$. Its degree is exactly $d$. Choose $d$ pivot variables
+$x_1,\ldots,x_d$ whose monomial has coefficient $a\ne0$ and write $y$ for the other variables.
+On every fixed-$y$ fiber the top pivot coefficient is $a$, so there is an accepted point in
+each fiber. The total count gives exactly one per fiber. Write it
+$b(y)=(b_1(y),\ldots,b_d(y))$. The top difference gives $a=(-1)^{d-\sum_i b_i(y)}$ on every
+fiber. Consequently
+\[
+F(x,y)=a\prod_{i=1}^d(x_i+b_i(y)-1).
+\]
+
+Comparing the coefficient of the product of all pivots except $i$ gives $a(b_i(y)-1)$. It has
+degree at most one in $y$. A Boolean affine function on the full cube is a constant, one bit,
+or its complement. Two nonzero coefficients would give at least three distinct values on a
+two-dimensional face.
+
+Each pivot is therefore fixed or tied, with a possible bit flip, to one free variable. The
+constant sign of $a$ forces each free variable that occurs to be used by an even number of
+pivots. Such a variable and its pivots form an odd block of size at least three. This gives
+exactly the form in Theorem~\ref{thm:stability}. Conversely the indicator of two complementary
+point patterns on an odd block of size $r$ has degree at most $r-1$, since the leading terms
+of its two point indicators cancel. Multiplication across disjoint blocks and fixed bits
+proves the degree bound. Its density is exactly $2^{-d}$. There are
+$L=d+\#\{\text{blocks}\}\le3d/2$ constrained bits.
+\end{proof}
+
+Multiplication by the parity character relates this cube equality problem to minimum-volume
+trades \cite{trades}. The slice measure changes the relative sizes of the equality cases.
+
+\subsection{Restricting the slice to its relevant coordinates}\label{sec:junta}
+
+Filmus and Ihringer \cite[Theorem 1.1]{fi} give an absolute $C$ such that when $\ell\ge C^d$ every
+Boolean function of degree at most $d$ on the slice depends on at most $J=d2^{d-1}$
+coordinates. Enlarge $C$ to exceed one, and also require $\ell\ge J$. Pair each of the
+relevant coordinates with a different outside coordinate. Assign the paired variables $x_i$
+and $1-x_i$, and fix the remaining coordinates with the required number of ones. This embeds
+the full relevant cube into the slice. Substituting into a degree-$d$ representative gives a
+Boolean cube polynomial of degree at most $d$ which agrees with the family on every membership
+pattern.
+
+Let $u=n-2k$. Under a uniform random $k$-set, the probability of any prescribed pattern on $L$
+coordinates with $w$ ones, divided by its fair cube probability, is
+\[
+D_{n,u}(L,w)=\frac{2^L(k)_w(n-k)_{L-w}}{(n)_L},
+\]
+
+where $(a)_j$ is a falling factorial. For fixed $d$ and $k/n\to1/2$ these ratios tend to one
+uniformly for $L\le J$. The cube density gap and the characterization in
+Section~\ref{sec:cube} now prove Theorem~\ref{thm:stability}.
+
+For $u=0,1$, the logarithm of the ratio is the sum of $\log(1-(u+2j)/n)$ for $0\le j<w$, plus
+the sum of $\log(1+(u-2j)/n)$ for $0\le j<L-w$, minus the sum of $\log(1-j/n)$ for $0\le j<L$.
+In particular $|\log D|\le C_1(L+1)^2/n$ for $(L+1)^2/n$ sufficiently small, with an absolute
+$C_1$. Choose $B$ so that $\ell\ge B^d$ meets the junta threshold and $J$ bound, and makes
+every ratio with $L\le J$ lie between $0.9$ and $1.1$. This is possible since $(d2^{d-1}+1)^2$
+is bounded by an absolute exponential in $d$. The pencil has cube density $2^{-d}$. Every cube
+function of greater density has at least twice that much. Its slice mass therefore exceeds
+that of the pencil. Every minimizer on these two layers belongs to Section~\ref{sec:cube}'s
+list.
+
+\subsection{The first correction on the two central layers}\label{sec:central}
+
+For a pattern from Section~\ref{sec:cube} only $L\le3d/2$ bits enter. Expanding the same logarithms gives
+\[
+D_{n,u}(L,w)=1+\frac{L-(2w-L)^2-2u(2w-L)}{2n}
++O\!\left(\frac{(L+1)^4}{n^2}\right).
+\]
+
+The sum of the quadratic remainders in the logarithms is $O((L+1)^3/n^2)$. Exponentiating adds
+$O((L+1)^4/n^2)$. All constants here are absolute and the bounds hold uniformly for $u=0,1$
+when $(L+1)^2/n$ is small.
+
+Condition on acceptance in the fair cube. The excess of ones over zeros among the constrained
+bits is $2w-L=b_0+\sum_j b_j\varepsilon_j$, where $b_0$ is the fixed bits' excess, $b_j$ is
+that of a chosen pattern on block $j$, and the $\varepsilon_j$ are independent fair signs.
+Averaging shows that the slice density divided by $2^{-d}$ is
+\[
+1-\frac{\Phi_u}{2n}+O\!\left(\frac{(d+1)^4}{n^2}\right),
+\qquad
+\Phi_u=b_0^2+2u b_0-h+\sum_j(b_j^2-r_j).
+\]
+
+Two different integer scores are strictly ordered by this expansion for $n>C_2(d+1)^4$ with an
+absolute $C_2$. Enlarge $B$ once more to ensure this. A larger score gives a smaller family.
+
+Put $t_j=r_j-1$. The score is at most
+\[
+h(h-1+2u)+\sum_j t_j(t_j+1).
+\]
+
+Equality requires every free block to be homogeneous. All fixed bits must have the same value,
+and for $u=1$ any fixed bits must be ones. Combining two nonempty free blocks' degree costs
+increases the bound by $2t_it_j$. It therefore suffices to maximize
+\[
+(d-t)(d-t-1+2u)+t(t+1)
+\]
+
+over even $t$ from zero to $2\lfloor d/2\rfloor$. This strictly convex quadratic takes its
+maximum only at endpoints. For even $d$, subtracting the value at zero from the value at $d$
+gives $2d(1-u)$. For odd $d$, the difference between the values at $d-1$ and zero is
+$-2u(d-1)$. These are precisely the types in Theorem~\ref{thm:main}(2).
+
+For the exact ties at $n=2k$ and odd $d$, set complementation exchanges the two pencils. A
+homogeneous $d$-block on its own has twice a pencil's size. Complementation pairs its members
+with opposite values at any specified extra bit, so fixing that bit gives the exact pencil
+size. At $n=2k+1$ and even $d$, the two parts of the homogeneous $(d+1)$-block have sizes
+$\binom{2k-d}{k-d-1}$ and $\binom{2k-d}{k}$. By symmetry and Pascal's identity their sum is
+$\binom{2k+1-d}{k-d}$. At $n=2k$ and even $d$ the two parts have equal size
+$\binom{2k-d-1}{k}$. This proves both central cases, including the equality statements.
+
+\section{Deletion of a coordinate}\label{sec:delete}
+
+Write $x_D=\prod_{i\in D}x_i$. On the $k$th layer, each monomial $x_T$ of degree at most $d$
+is a linear combination of degree-$d$ monomials, since
+\[
+\sum_{D\supseteq T,\ |D|=d}x_D=\binom{k-|T|}{d-|T|}x_T .
+\]
+
+The matrix of values of the $x_D$ has full real column rank if $d\le\min(k,n-k)$. Here is a
+direct proof. In a vanishing linear combination, exchange two coordinates $i,j$ around any
+$(k-1)$-set avoiding both. The differences $a_{T\cup\{i\}}-a_{T\cup\{j\}}$ give a vanishing
+homogeneous combination of degree $d-1$ on the $(n-2,k-1)$ layer. The admissibility
+inequalities persist, so induction from degree zero makes these differences zero. Every two
+$d$-sets can be connected by such exchanges. The coefficients are equal, and evaluation
+multiplies their common value by $\binom{k}{d}>0$.
+
+Suppose $d<\ell$ and all accepted sets contain $i$. On the layer $x_i=0$ the coefficients of
+$x_D$ with $i\notin D$ vanish by full column rank there. Factoring out $x_i$ gives a nonempty
+Boolean family of degree at most $d-1$ on $(n-1,k-1)$. Complementing gives a corresponding
+degree drop if all accepted sets omit $i$. The same argument for the containing case works
+whenever $d\le\min(k,n-1-k)$ and $d\ge1$.
+
+Alternatively every deletion $x_i=0$ is nonempty. Double-counting the omitted elements gives
+\[
+(n-k)|\mathcal F|=\sum_{i=1}^n|\mathcal F_{x_i=0}|
+\ \ge\ n\,M_{d}(n-1,k).
+\]
+
+For $n\ge2k+2$, once the preceding layer has the pencil minimum, the right side divided by
+$n-k$ is $\frac{n}{n-d}\binom{n-d}{k-d}$. This strictly exceeds a pencil. An extremizer must
+contain a common element, and equality reduces to equality for the degree-$d-1$ family after
+removing it.
+
+Induct first on degree and then, for each fixed $k\ge B^d$, on $n$ starting at the two central
+layers. The smaller-degree layer has $k-1\ge B^{d-1}$ when $d\ge2$ and $B\ge2$. In the
+containing case its imbalance is at least three. Degree zero is immediate. Thus all off-center
+minimizers in the stated range are pencils. The same induction, without a threshold, shows
+that the numerical conjecture everywhere would follow from its middle and adjacent values for
+all widths and degrees. It works as stated within any bounded range of widths as well. When
+$d=k$, singleton families give the base directly.
+
+For fixed $d$ there are finitely many remaining widths $\ell<B^d$. At fixed $k=\ell>d$,
+Theorem 5 of Grosu, Person and Szabó \cite{gps} with rank deficiency one says that, for all sufficiently
+large $n$, the fewest $k$-rows one can remove to lower the real column rank of the inclusion
+matrix is $\binom{n-d}{k-d}$. Equality removes precisely the rows containing one $d$-set. The
+rows outside the support of any nonzero slice polynomial annihilate its nonzero vector of
+homogeneous coefficients. The rank theorem therefore supplies the fixed-width minimum and
+uniqueness. Take the largest of the finitely many thresholds and enlarge it past $2B^d+2$.
+Complementation completes Theorem~\ref{thm:main}(2).
+
+\section{Quadratic families and layers of width at most six}\label{sec:small}
+
+The support size of every Boolean family of degree at most $d$ is a multiple of
+\[
+\Delta(n,k,d)=\gcd_{0\le i\le d}\binom{n-i}{k-i}.
+\]
+
+We use this divisibility theorem and the elementary degree-one minimum $\binom{n-1}{\ell-1}$
+for $\ell\ge1$. Both facts are given in \cite[Sections 2 and 7]{kmw}.
+
+Start at $k=2$, where every singleton on the layer has degree two. Induct on $k\ge3$, treating
+the middle and adjacent layer before using Section~\ref{sec:delete} for larger $n$. At $n=2k$
+a family with a common element has at least the pencil size by the degree drop. Otherwise
+double-counting the deletions gives at least $2M_{2}(2k-1,k-1)$ by complementation. The
+preceding width gives $2\binom{2k-3}{k-3}=2\binom{2k-3}{k}$, exactly the homogeneous triple's
+size.
+
+Now set $n=2k+1$ and $P=\binom{2k-1}{k-2}$. A common element again gives at least $P$. Without
+one, the middle-layer result gives the lower bound $A=\frac{2k+1}{k+1}\,2\binom{2k-3}{k}$.
+Direct cancellation gives
+\[
+\frac{P-A}{P}=\frac{6}{(2k-1)(2k-2)},\qquad
+\frac{\Delta(2k+1,k,2)}{P}=\frac{\gcd(2,k-1)}{k-1}.
+\]
+
+For the second identity the first three binomials defining $\Delta$, divided by $P/(k-1)$, are
+$2(2k+1),2k,k-1$. The gap $P-A$ is strictly less than one unit of divisibility for every
+$k\ge3$. Since $P$ is itself a multiple of $\Delta$, every family has size at least $P$.
+Off-center propagation in Section~\ref{sec:delete} uses only the degree-one minimum at smaller
+degree. This proves the numerical law for degree two without any size threshold.
+
+It remains to determine the entries left open in Tables~1--3 of \cite{kmw}. The following
+calculation uses the established entries of those tables.
+
+At $(12,6,3)$ a common element gives at least $M_{2}(11,5)=84$. Otherwise the deletion average
+gives at least $2M_{3}(11,5)=56$. Divisibility by 42 raises this bound to 84. At $(13,6,3)$ a
+common element gives at least $M_{2}(12,5)=120$, and the alternative lower bound is
+$13\cdot84/7=156$. The pencil attains 120.
+
+At $(13,6,4)$ a common element gives at least $M_{3}(12,5)=36$. Otherwise all thirteen
+deletions have size at least 14, and their sum is seven times the family size. The family size
+is divisible by six. Thus the only possible size below 36 is 30. Every nonempty deletion has
+size divisible by 14 on $(12,6)$. At size 30 its possibilities are 14 and 28. Some deletion
+must have size 28 because $7\cdot30>13\cdot14$. Its complementary restriction would then have
+size two on $(12,5)$, contradicting $M_{4}(12,5)=8$. A pencil attains 36.
+
+The resulting values are as follows. For $n\ge2k+2$ the preceding pencil value and the
+smaller-degree value give the entry directly by Section~\ref{sec:delete}. For the two degrees
+where intermediate off-center rows are needed, the same recurrence gives $M_{2}(14,5)=220$ and
+$M_{3}(14,5)=55$ from the preceding width-five rows.
+
+\begin{center}\normalfont
+\begin{tabularx}{\linewidth}{@{}lXl@{}}
+\toprule
+Degree & $(n,k)$ in the order shown & Minimum sizes \\
+\midrule
+2 & $(13,6),(14,6)$ & $330,\ 495$ \\
+3 & $(13,5),(12,6),(13,6),(14,6),(15,6)$ & $45,\ 84,\ 120,\ 165,\ 220$ \\
+4 & $(13,6),(14,6),(15,6)$ & $36,\ 45,\ 55$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+To prove the whole width-six assertion, take $k\le6$. The middle and adjacent base values for
+$2\le d<k$ are supplied by Tables 1--3 and the preceding arguments, except for $k=6,d=5$. At
+$(12,6,5)$ divisibility by seven gives the pencil value seven. At $(13,6,5)$ a common element
+gives at least $M_{4}(12,5)=8$ and the deletion average otherwise gives at least
+$13\cdot7/7=13$. A pencil has size eight. Degrees zero, one and $k$ give the boundary cases.
+Section~\ref{sec:delete} propagates all these bases to arbitrary $n$ and finishes
+Theorem~\ref{thm:main}(1).
+
+\section{One and two degrees below the width}\label{sec:high}
+
+Throughout the rest of the paper let $k\le m=n-k$ and put $t=k-d$. In this notation the pencil
+size is $\binom{m+t}{t}$. At the even-degree middle-layer exception the minimum is
+$2\binom{k+t-1}{t-1}$. On $J(16,8)$, for example, the minimum at degree seven is nine, although
+each of the nine members of a seven-pencil may independently be replaced by its complement.
+
+\begin{theorem}\label{thm:high}
+
+For $t=1,2$ the minimum is \eqref{eq:minimum}. For $t=1$ its equality cases, up to permutation, are as follows.
+
+\begin{itemize}
+\item If $m=k$ and $k$ is odd, take one complementary pair.
+\item If $m=k$ and $k$ is even, start with a $(k-1)$-pencil and independently complement any of its members.
+\item If $m=k+1$ and $k$ is odd, take a pencil, or take a $k$-set $R$ together with all $k$-sets disjoint from $R$.
+\item At all other parameters, take a pencil.
+\end{itemize}
+
+For $t=2$ the complete list is as follows.
+
+\begin{itemize}
+\item If $m=k$ and $k$ is even, require the $k-1$ elements of a fixed set to be all present or all absent.
+\item If $m=k$ and $k$ is odd, take a pencil or its complement image. A further rule prescribes the membership of one element and requires $k-2$ other marked elements to be all present or all absent.
+\item If $m=k+1$ and $k$ is even, take a pencil, or require $k-1$ marked elements to be all present or all absent.
+\item At all other parameters, take a pencil.
+\end{itemize}
+\end{theorem}
+
+Lists can coincide at degree zero or one. For even $k\ge4$, the number of distinct labelled
+minimizers on $J(2k,k)$ at degree $k-1$ is $\binom{2k}{k-1}2^{k+1}$.
+
+\subsection{The cost of a matching cube}\label{sec:weighted}
+
+Choose $S$ in the support. A uniform injection from $S$ into its $m$-element complement pairs
+each member with a distinct replacement. Switching any subset $A$ of the $k$ pairs gives a
+vertex of a Boolean cube through $S$. Each original coordinate is constant, a switch bit, or
+its complement, so polynomial degree never increases on restriction. Write $f(A)$ for the
+value on the resulting cube and $w_j=\binom mj$.
+
+A set $T$ at distance $j=|T\setminus S|$ is on this cube exactly when the images of
+$S\setminus T$ form $T\setminus S$. These images form a uniform $j$-subset of the $m$ possible
+replacements. Thus the probability of seeing $T$ is $1/w_j$. With $F$ the original support, we
+have
+\begin{equation}
+|F|=\mathbb E\left[\sum_{A:\,f(A)\ne0}w_{|A|}\right].
+\label{eq:weight}
+\end{equation}
+
+We call the sum the cost of the cube. Every injection has positive probability. If every cost
+is at least $B$ and $|F|=B$, every cube through every $S\in F$ has cost $B$.
+
+For degree at most $k-t$, the following alternating moments vanish for each $I\subseteq[k]$ with $|I|<t$:
+\begin{equation}
+\sum_{A\supseteq I}(-1)^{|A|}f(A)=0.
+\label{eq:moments}
+\end{equation}
+
+Indeed, multiply the polynomial by the monomial prescribing that all bits in $I$ are one.
+After multilinearization the degree is less than $k$. Every remaining monomial omits a bit,
+and pairing the two values of that bit cancels its alternating sum. For $t=2$, a Boolean cube
+support through the origin has at least four vertices. The zeroth moment gives equal numbers
+of even and odd vertices. A support of size two is ruled out by a singleton moment at any bit
+separating them.
+
+We will also use the following observation. Suppose all nonzero vertices of a cube have
+$|A|\le t$. In the retained-bit variables $y_i=1-1_{i\in A}$, the polynomial vanishes whenever
+fewer than $d=k-t$ bits are one. Its multilinear coefficients of degrees less than $d$ vanish
+by evaluating successively on each smaller subset of retained bits. It is therefore
+homogeneous of degree $d$. Its coefficients of degree $d$ are its values at the vertices with
+$|A|=t$. For a Boolean polynomial with $f(\varnothing)=1$, their sum is one and exactly one
+equals one. Its support is the face obtained by freely switching $t$ specified pairs.
+
+\subsection{Recovering a pencil from its restrictions}\label{sec:rigidity}
+
+Suppose every cube through $S$ has support a face of $r$ free switches through the origin.
+Form the zero-one matrix whose $(s,u)$ entry tells whether $S-s+u$ belongs to the support.
+Each injection selects entries of sum $r$. If $m>k$, any row can use either of two columns
+with the other $k-1$ rows held fixed. Its entries are consequently constant. The $r$ rows of
+ones identify the free elements of $S$ for every injection. Every $T$ lies on some cube
+through $S$, so the support is the pencil with core the other $k-r$ elements.
+
+There is a balanced version for unordered pairs $\{T,T^c\}$ of $K$-sets on $2K$ points. Fix a
+base $K$-set $S$. Suppose each orbit in the family has a representative within distance $r$ of
+$S$, where $2r<K$, and on every perfect matching through $S$ these representatives form an
+$r$-face. The nearby representative is unique, and a balanced matching cube contains a vertex
+together with its complement. The same matrix of single switches now has constant sum on
+permutations. Exchanging two assigned columns shows that every two rows differ by a constant
+across columns. If a row contains both zero and one, all rows equal it. Otherwise each row is
+constant. In the row case the near representatives form a pencil. In the column case they are
+all the sets contained in $S$ together with $r$ specified outside elements, since only those
+outside elements can be added. Complementing all representatives gives a pencil in this case
+too. In particular the family of unordered pairs is the image of a full $(K-r)$-pencil.
+
+The same proof applies to a balanced family whose elements are assigned an orientation
+afterwards. It leaves the permissible orientations to be checked against the polynomial
+degree.
+
+\subsection{One degree below the width}\label{sec:one}
+
+\begin{proof}[Proof of Theorem~\ref{thm:high} for $t=1$]
+
+The zeroth moment forces a vertex at odd distance from the origin in every cube. For $m>k$ its
+weight is at least $m$. For $m=k$ even, an odd distance lies strictly between $0$ and $k$, so
+its weight is at least $k$. Equality in either bound on the total cost leaves just the origin
+and a single odd vertex of weight $m$. Its distance is $1$ or $m-1$. These are the only
+interior positions with $\binom mj=m$, with coincident positions counted once. For $m=k$ odd
+the lower bound is two and the only second vertex of cost one is the antipode. Its mate is
+$S^c$ for every matching. Complementary pairs attain degree at most $k-1$, since $\prod_{i\in
+S}x_i+\prod_{i\in S}(1-x_i)$ loses its highest term for odd $k$.
+
+When the only admissible distance is one, Section~\ref{sec:rigidity} gives an ordinary pencil
+for $m>k$. In the even balanced case an extremizer contains at most one representative per
+complementary pair. Indeed an equality cube through an accepted set has no second even vertex.
+Every support orbit, oriented within distance one of $S$, now gives a single free switch on
+each matching. Section~\ref{sec:rigidity} with $r=1$ identifies the orbits when $k\ge4$. Any
+orientation works. Replacing $T$ with $T^c$ changes the indicator by the difference of
+$\prod_{i\in T}(1-x_i)$ and $\prod_{i\in T}x_i$, of degree at most $k-1$ for even $k$. For
+$k=2$ there are three complementary pairs, and a fixed one-element pencil meets each pair
+once. The same description follows directly.
+
+For even $k\ge4$ the core of the folded pencil is unique. Once one member of a lifted clique
+of mutually distance-one sets is oriented, every other orientation in that clique is forced,
+since distances one and $k-1$ differ. Hence the only two lifts which are such cliques are the
+full pencil and its complement image. The latter consists of all $k$-subsets of a $(k+1)$-set
+and has empty intersection. Only the former has a common $(k-1)$-core. Choosing the core and
+then $k+1$ independent orientations gives the stated count.
+
+For $m=k+1$ and $k$ odd, adjoin a new element $\infty$ to every member and view it as the
+oriented representative of a complementary pair of $(k+1)$-sets on $2k+2$ elements. Any
+matching at $S\cup\{\infty\}$ pairs $\infty$ with the one unused replacement of an injection
+through $S$. On the original cube, a second vertex at distance one remains a neighbor. A
+second vertex switching all $k$ original axes becomes, after complementation, the neighbor
+switching only the $\infty$ axis. The near representatives thus give a one-dimensional face on
+every balanced cube. For $k\ge3$, Section~\ref{sec:rigidity} gives a pencil on a core of size
+$k$. Orient every orbit to contain $\infty$, then delete $\infty$. A core containing $\infty$
+gives an ordinary pencil. A core $R$ avoiding $\infty$ gives $R$ and the $k$-sets disjoint
+from it. Its indicator requires all or none of $R$, which has degree at most $k-1$ for odd
+$k$. When $k=1$ the degree-zero function is constant. These constructions attain each lower
+bound.
+\end{proof}
+
+\subsection{The possible squares two degrees below the width}\label{sec:two}
+
+Suppose $k\ge4$. A pencil costs $B=\binom{m+2}{2}=1+2m+\binom m2$. For even $m=k$ the proposed
+optimum is instead $E=2(k+1)$. We classify each cube at or below the relevant cost. In the
+formulas below, $A$ is the set of switched axes and $[k]$ is the antipode.
+
+\begin{center}\normalfont
+\begin{tabularx}{\linewidth}{@{}p{.43\linewidth}X@{}}
+\toprule
+Parameters & Supports on the matching cube \\
+\midrule
+$m\ge k+2$, or $m=k+1$ with $k$ odd & $\varnothing,\{i\},\{j\},\{i,j\}$ \\
+$m=k+1$, $k$ even & The preceding square, or $\varnothing,\{i\},[k]\setminus\{i\},[k]$ \\
+$m=k$, $k$ even & $\varnothing,\{i\},[k]\setminus\{i\},[k]$ \\
+$m=k$, $k$ odd & The ordinary square, or $\varnothing,\{i\},[k]\setminus\{j\},[k]\setminus\{i,j\}$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Here $i\ne j$ whenever both indices occur. Each displayed support has exactly the proposed cost. It therefore suffices to prove the table.
+
+\emph{Which distances can occur.} At budget $B$, a vertex with $3\le j\le m-3$ has cost at least $\binom m3>B$ for $m\ge8$. The inequality at eight persists since $m(m-1)(m-2)/[3(m+1)(m+2)]$ increases. For $m=5$ that interval is empty. For $m=6,7$ off the middle, the origin and two further vertices cost at least $1+2m$, to be added to $\binom m3$. For $m=k=7$ a weight of 35 together with the origin exhausts budget 36, whereas four vertices are required. Also at most one vertex of weight $\binom m2$, at distance $2$ or $m-2$, can occur when $m\ge5$. Two such weights and the origin already cost at least $B$ and a fourth vertex has positive weight.
+
+For the even middle budget $E$, all distances $2,\dots,k-2$ are excluded. For $k\ge6$ their
+weights are at least $\binom k2>E$. For $k=4$ a vertex of weight six, together with three
+other vertices, costs at least $6+1+1+4>10$.
+
+\emph{Off the middle.} If $m\ge k+3$, the support stays within distance two, and the homogeneous polynomial argument in Section~\ref{sec:weighted} gives a square. At $m=k+2$, the only additional possibility is the antipode, which costs $\binom m2$ and excludes every low pair. Write $e=(-1)^k$. If the antipode occurs, the singleton moment at $i$ gives $x_i=e$ for every singleton indicator $x_i$. The zeroth moment gives $\sum_i x_i=1+e$, implying $(k-1)e=1$, impossible for $k\ge4$.
+
+At $m=k+1$, let $x_i$ indicate a singleton, $Y$ count low pairs, and $y_i$ count low pairs
+containing $i$. Let $v_i$ indicate the vertex missing just $i$, $V=\sum v_i$, and let $z$
+indicate the antipode. We have $Y+V\le1$. The two moment equations are
+\[
+1-\sum_i x_i+Y+e(z-V)=0,\qquad
+x_i=y_i+e(z-V)+e v_i.
+\]
+
+If $Y=V=0$, these require $(k-1)ez=1$. If $Y=1$, the two indices in its pair and the indices
+outside it force $z=0$, and precisely that square remains. If $V=1$, let $r$ be its missing
+index. Then $x_r=ez$ and $x_i=e(z-1)$ elsewhere. For $e=1$ this forces $z=1$ and only $x_r=1$.
+For $e=-1$ it forces $z=0$, whereupon the zeroth moment gives $k=3$. This proves both
+off-middle rows.
+
+\emph{At the middle.} For even $k$, only the origin, singletons, vertices missing one index, and the antipode can occur. With the same notation, the moments reduce to
+\[
+\sum_i x_i+V=1+z,\qquad x_i=z-V+v_i .
+\]
+
+Thus $(k-1)z-(k-2)V=1$, forcing $z=V=1$ and $x_i=v_i$. This gives the paired edge in the table.
+
+For odd $k\ge5$, count also the high vertices missing a pair. Write $Q$ for their number and
+$q_i$ for the number of missing pairs containing $i$. The bound on the two outer weights says
+$Y+Q\le1$. Put $C=V-z-Q$. Directly summing \eqref{eq:moments} gives
+\[
+x_i+v_i=y_i+q_i+C,\qquad
+\sum_i x_i=1+Y+C,\qquad (k-2)C=1+z-Y-Q .
+\]
+
+For the last identity, sum the first over $i$ and use $V=C+z+Q$. Its right side is in
+$\{0,1,2\}$, so $C=0$, $z=0$ and $Y+Q=1$. If $Y=1$, then $V=0$ and the two singleton vertices
+complete the ordinary square. If $Q=1$, then $V=1$ and exactly one low singleton occurs. Their
+indices split the two positions in the missing pair, giving the last row. This completes the
+cost proof.
+
+\subsection{Equality two degrees below the width}\label{sec:eqhigh}
+
+\begin{proof}[Completion of the proof of Theorem~\ref{thm:high}]
+
+For $m>k$ in the ordinary-square case, the two free rows in Section~\ref{sec:rigidity} give
+the pencil. For even $k$ and $m=k+1$, use the $\infty$ extension from Section~\ref{sec:one}.
+The paired edge on the original cube folds to a square on axes $i$ and $\infty$. The ordinary
+square already has two free axes. Every support orbit has a unique representative within
+distance two of $S\cup\{\infty\}$ because $k+1\ge5$. Section~\ref{sec:rigidity} gives a
+balanced pencil on $k-1$ elements. Orienting toward $\infty$ gives an ordinary $(k-2)$-pencil
+if $\infty$ is in the core. If the core avoids $\infty$, a set is chosen precisely when it
+contains or avoids the whole core. The latter indicator has degree at most $k-2$ since $k-1$
+is odd. Its size is $\binom{k+2}{2}$ from the avoidance part plus $k+2$ from the containment
+part, which sums to $\binom{k+3}{2}$.
+
+For $m=k$ even, the table at each accepted root forces its complement to belong as well.
+Folding each complementary pair into its representative at distance at most one leaves a
+single free switch in every matching. By Section~\ref{sec:rigidity} the family consists
+exactly of a $(k-1)$-pencil and the complements of all its members. This is the all-or-none
+indicator on an odd core and has size $2(k+1)$.
+
+For $m=k$ odd, apply the table at each accepted root. No complementary pair has both members
+present. At a fixed root, the accepted sets project to nearby representatives at distance at
+most two. In the last row the four nearby representatives are the empty switch, the two
+singleton switches and their union. Thus every matching gives a square, and
+Section~\ref{sec:rigidity} identifies the orbits as those of a $(k-2)$-pencil. It remains to
+specify the orientations.
+
+Let $R$ be its core, $U=[2k]\setminus R$, and write $h(ab)\in\{0,1\}$ for the decision to
+complement the pencil member $R\cup\{a,b\}$. For four distinct elements of $U$, use two pairs
+among them as free axes and match the remaining $k-2$ elements of $U$ bijectively to $R$. On
+this cube the unswitched pencil occupies a square. Each complemented vertex changes its
+contribution to the top alternating sum by minus twice its original sign, since $k$ is odd.
+The top alternating sum of the oriented family vanishes. Using all pairings of the four
+elements gives
+\[
+h(ab)+h(cd)=h(ac)+h(bd)=h(ad)+h(bc).
+\]
+
+Hence $h(iu)-h(ju)$ is independent of $u$ outside $i,j$. If every such difference is zero, $h$
+is constant. Otherwise label $i,j$ so that the difference is one. Every edge from $i$ to
+another vertex outside the pair has value one, and every such edge from $j$ has value zero.
+For distinct $u,v$ outside the pair the same identity gives $h(uv)=1-h(ij)$. Thus the switched
+edges are exactly a star or its complement. Constant decisions give the pencil and its
+complement image. Switching the edges through $v$ requires $v$ to be absent and the elements
+of $R$ to be all present or all absent. Complementing the whole family gives the rule with $v$
+present. Since $|R|=k-2$ is odd, multiplying its all-or-none indicator by the prescribed bit
+or its complement gives degree at most $k-2$. These orientations each choose exactly one
+member of every orbit, giving $\binom{k+2}{2}$ sets. The off-middle pencils have the claimed
+size by direct counting.
+
+For $k=2$, $t=2$ means degree zero and the only nonempty family is the whole layer. For $k=3$,
+$t=2$ means degree one. In a nonconstant linear Boolean function the difference of any two
+coefficients is $0$ or $\pm1$, by exchanging those bits. Thus there are two coefficient levels
+and the function is a constant plus the intersection size with one coefficient class. If both
+classes have at least two elements, this intersection takes at least three consecutive values
+because $k,m\ge2$. Consequently a nonconstant Boolean function prescribes one bit. Its two
+orientations tie at the middle and prescribing presence wins on the smaller side. This
+verifies the small cases of both the formula and the list.
+\end{proof}
+
+\begin{corollary}\label{cor:odd}
+
+For every odd $k\ge3$, the minimum on $J(2k,k)$ at degree $k-3$ is $2\binom{k+2}{2}$.
+\end{corollary}
+
+\begin{proof}
+
+A singleton support violates the zeroth moment on any matching through it. Two distinct
+members differ on some coordinate, so both restrictions of the family at that coordinate are
+nonempty. Each has degree at most $k-3$ on a layer of width $k-1$ in $2k-1$ points, after
+complementing one restriction. Theorem~\ref{thm:high} at $t=2$ gives at least $\binom{k+2}{2}$
+members in each restriction. Requiring $k-2$ marked elements to be all present or all absent
+attains their sum, since $k-2$ is odd.
+\end{proof}
+
+\section{Polynomial support and the rank of inclusion matrices}\label{sec:rank}
+
+\begin{theorem}\label{thm:rank}
+
+Let $m>k$, $1\le t\le k$ and $d=k-t$. Suppose
+\[
+\binom mj\ge \binom{m+t}{t}\qquad(t<j\le k).
+\]
+
+Every nonzero complex polynomial function on $J(n,k)$ of degree at most $d$ has support at
+least $\binom{m+t}{t}$. Equality holds precisely for nonzero scalar multiples of $d$-pencil
+indicators. For a nontrivial abelian group $G$, a polynomial is a sum of square-free bit
+monomials with coefficients in $G$, evaluated by adding the coefficients of the monomials
+taking value one. The same minimum and equality list hold over $G$ if the displayed condition
+holds and $2\binom mt\ge\binom{m+t}{t}$. In particular, for every such $G$ they hold whenever
+$t\ge2$, $m\ge4t^2$ and $m-k\ge t$, including the boundary $m-k=t$. Each minimizing function
+takes one fixed nonzero group value on a pencil and vanishes elsewhere.
+
+In the complex range, and over every field in the group range, the minimum number of rows
+whose deletion lowers the rank of the $k$-set versus $d$-set inclusion matrix is
+$\binom{m+t}{t}$. Every minimum deletion removes a pencil.
+\end{theorem}
+
+For example, on $J(24,10)$ at degree seven, the first condition gives the exact minimum
+$\binom{17}{3}=680$. The smallest binomial coefficient for $4\le j\le10$ is
+$\binom{14}{4}=1001$, and $2\binom{14}{3}=728\ge680$. The example therefore works over every
+coefficient group and every field in the rank conclusion.
+
+\begin{proof}
+
+Choose $S$ where the absolute value of the complex function is maximal, and divide by its
+nonzero value there. Each cube has $f(\varnothing)=1$ and $|f(A)|\le1$. Write
+$B_t=\binom{m+t}{t}$. If the cube has a support point with $t<|A|\le k$ under the first
+hypothesis of Theorem~\ref{thm:rank}, that vertex and the origin together cost more than
+$B_t$.
+
+Otherwise the retained-bit polynomial is homogeneous of degree $d$, by
+Section~\ref{sec:weighted}. Each degree-$d$ monomial survives on exactly $\binom tj$ vertices
+with $j$ switched axes. Summing values on that level gives $\binom tj f(\varnothing)=\binom
+tj$. The triangle inequality forces at least $\binom tj$ support points there. Vandermonde's
+identity gives
+\[
+\sum_{j=0}^t\binom tj\binom mj=\binom{m+t}{t}.
+\]
+
+At equality the $j=t$ level contains just one nonzero value. It is the only nonzero
+homogeneous coefficient, equal to one. Hence every equality cube is a face with constant value
+on its support. Equation~\eqref{eq:weight} and the rectangular part of
+Section~\ref{sec:rigidity} give one global pencil and the asserted constant value.
+
+For $G$-valued functions under the additional inequality $2\binom mt\ge B_t$, root the cube at
+any nonzero value. In a cube of cost at most $B_t$, the high-distance condition excludes all
+distances greater than $t$. The homogeneous expansion in Section~\ref{sec:weighted} is valid
+in $G$ by successive subtraction. Two nonzero coefficients would already cost $2\binom mt$ on
+the $t$th level, in addition to the origin. There must be one nonzero coefficient because the
+origin is nonzero. Thus each such cube is a single face with the same group value throughout
+and has cost exactly $B_t$. Averaging and the row argument give the lower bound and all
+equality cases.
+
+To verify the uniform range, observe that $m\ge4t^2$ gives
+\[
+\frac{\binom mt}{B_t}=\prod_{i=1}^{t}\left(1-\frac{t}{m+i}\right)
+\ge 1-\frac{t^2}{m+1}>\frac34 .
+\]
+
+It follows that $2\binom mt>B_t$ and $\binom m{t+1}>B_t$, the latter by multiplying the ratio
+by $(m-t)/(t+1)$ for $t\ge2$. Unimodality and symmetry of binomial coefficients settle all
+$t<j\le k$ if $m-k\ge t+1$. If $m-k=t$, only the antipode could escape that comparison. In a
+cube costing at most $B_t$, a nonzero antipode excludes every point at distance $t$, since
+both weights are $\binom mt$. Every distance strictly between $t$ and $k$ is already excluded.
+Applying the group-valued cancellation \eqref{eq:moments} at each $(t-1)$-set $I$ now forces
+$f(I)\ne0$, as only $I$ and the antipode can contribute. Their total cost across the distinct
+vertices is at least
+\[
+\binom mt+\binom{k}{t-1}\binom m{t-1}>2\binom mt>B_t .
+\]
+
+Indeed $k=m-t$, $1\le t-1<k$, and $\binom{k}{t-1}\ge k>(k+1)/t=\binom mt/\binom m{t-1}$. This
+rules out the antipode and completes the support theorem.
+
+Finally, over any field every vector of the inclusion-matrix column space is a
+degree-at-most-$d$ function, and each column itself is a pencil indicator. Deleting a row set
+lowers rank exactly when a nonzero vector of the original column space vanishes on every
+surviving row. The support lower bound and pencil equality list therefore give the stated
+deletion result, including in positive characteristic.
+\end{proof}
+
+Theorem~\ref{thm:main} leaves open the general case in which both the degree and its distance
+from the width grow. Even on the middle layer, the two moment conditions used for $t=2$ give
+way to an increasing system of alternating equations. Determining which rooted cube supports
+attain the least possible cost in that system would extend the matching argument to further
+degrees.
+
+\section*{AI Assistance Disclosure}
+
+OpenAI's GPT-6.2 Astra was used in an autoresearch loop and reported this discovery to the author.
+
+\begingroup\small
+\begin{thebibliography}{9}
+\bibitem{kmw}
+M. Kiermaier, J. Mannaert, and A. Wassermann, \emph{The paired construction for Boolean
+functions on the slice} (2025). \href{https://arxiv.org/abs/2510.02804}{arXiv:2510.02804}.
+
+\bibitem{fi}
+Y. Filmus and F. Ihringer, \emph{Boolean constant degree functions on the slice are juntas}
+(2018). \href{https://arxiv.org/abs/1801.06338}{arXiv:1801.06338}.
+
+\bibitem{gps}
+C. Grosu, Y. Person, and T. Szab\'o, \emph{On the rank of higher inclusion matrices} (2013).
+\href{https://arxiv.org/abs/1306.2197}{arXiv:1306.2197}.
+
+\bibitem{abss}
+P. Amireddy, A. R. Behera, S. Srinivasan, and M. Sudan, \emph{A near-optimal polynomial
+distance lemma over Boolean slices}, in ICALP 2025, LIPIcs \textbf{334}, 11:1--11:17.
+\href{https://doi.org/10.4230/LIPIcs.ICALP.2025.11}{doi:10.4230/LIPIcs.ICALP.2025.11}.
+
+\bibitem{trades}
+E. Ghorbani, S. Kamali, G. B. Khosrovshahi, and D. S. Krotov, \emph{On the volumes and affine
+types of trades}. \href{https://arxiv.org/abs/1810.02296}{arXiv:1810.02296}.
+\end{thebibliography}
+\endgroup
+
+\end{document}

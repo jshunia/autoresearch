@@ -1,0 +1,392 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,tabularx}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!40!black,citecolor=blue!40!black,
+            urlcolor=blue!40!black]{hyperref}
+
+\newcommand{\manuscripttitle}{Optimal pooled measurements with unknown values\\over abelian groups}
+\newcommand{\manuscriptkeywords}{detecting matrix, coin weighing, abelian group, adversarial error, sparse recovery}
+\hypersetup{
+  pdftitle={Optimal pooled measurements with unknown values over abelian groups},
+  pdfauthor={Joseph M. Shunia},
+  pdfsubject={Detecting matrices for signals over abelian groups},
+  pdfkeywords={\manuscriptkeywords}
+}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\numberwithin{equation}{section}
+\setlength{\emergencystretch}{1.5em}
+\addtolength{\skip\footins}{6pt}
+
+\title{\vspace{-1.5\baselineskip}%
+  \manuscripttitle}
+\author{Joseph M. Shunia\thanks{Independent researcher, Ann Arbor, Michigan, United States.
+  Email: \href{mailto:jshunia@gmail.com}{\texttt{jshunia@gmail.com}}.}}
+\date{November 22, 2026}
+
+\begin{document}
+\maketitle
+\vspace{-\baselineskip}
+
+\begin{abstract}
+We study the number of subset sums needed to recover an unknown vector over an abelian group.
+The vector has at most $s$ nonzero entries and at most $q$ distinct nonzero values, and the
+values themselves are unknown. For each dimension and each substitution fraction below one
+quarter, we construct by a probabilistic argument a single ordered binary matrix whose
+prefixes attain the optimal order for all groups and all $s,q$. The order depends on the group
+only through the least prime order of one of its elements. The same matrix gives signed measurements on
+groups without an element of order two. For any specified matrix we prove an exact
+cyclic-subgroup criterion for collisions and give a finite certificate by Smith normal form.
+\\[2mm]
+{\bf 2020 Mathematics Subject Classification:} 94B25 (primary), 05D40, 15B36 (secondary).
+\\[2mm]
+{\bf Keywords:} \manuscriptkeywords.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+Four bags each contain either one counter or four counters. Measure each triple of bags. If
+the instrument reports totals modulo nine, four ones and four fours both produce the readings
+$(3,3,3,3)$. The same four tests determine every real-valued input. Which arithmetic features
+create ambiguities like this, and how many tests suffice when the values in the bags are
+themselves unknown?
+
+Write $G$ additively and assume $G\ne 0$. Let $X_{s,q}(G)$ consist of vectors in $G^n$ with at
+most $s$ nonzero coordinates and at most $q$ distinct nonzero values, where $1\le q\le s\le n$
+and $n\ge2$. Different candidate vectors may use entirely different values. A subset test adds
+the coordinates in a specified subset. A signed test gives every coordinate coefficient $+1$
+or $-1$. A correct reading reports one exact element of $G$. A schedule's minimum distance is
+the least Hamming distance between the answer words of distinct inputs.
+
+Let $p(G)$ be the least prime $p$ for which $G$ has an element of order $p$, with
+$p(G)=\infty$ for torsion-free groups. All logarithms are natural. With $\min(u,\infty)=u$,
+define
+\[
+F(n,s,q,P)=
+\frac{s\bigl(\log(en/s)+\log(1+\min(q,P))\bigr)}
+     {\log(1+\min(s,P))}.
+\]
+
+\begin{theorem}\label{thm:rate}
+
+Fix $0\le\eta<1/4$. For each $n$ there is a single ordered array of binary rows such that, for
+every $s,q,G$, its first $\lceil C_\eta F(n,s,q,p(G))\rceil$ subset tests recover every member
+of $X_{s,q}(G)$ through $\lfloor\eta m\rfloor$ substitutions, where $m$ is that prefix length.
+The same binary array, with entries changed by $a\mapsto2a-1$, has the signed-test guarantee
+on every group with no element of order two. A group with an element of order two admits
+indistinguishable one-sparse inputs for every signed schedule. In both recoverable models even
+a deterministic adaptive strategy with truthful answers needs at least $cF(n,s,q,p(G))$ tests
+in the worst case, for an absolute $c>0$. One quarter is the limiting substitution fraction
+for nonadaptive schedules as $n$ grows.
+\end{theorem}
+
+Detecting matrices encode a vector by sums of selected entries. Lindstr\"om studied the case
+of a known finite alphabet \cite{lindstrom}. When real coin weights can take a bounded number
+of unknown values, Alon and Kozlov's balanced weighing theorem already implies the optimal
+order for dense noiseless recovery \cite{alon}. Sparse parity checks over a prescribed prime
+field and noisy recovery of arbitrary real weights were studied by Bshouty and Mazzawi
+\cite{bm,bmnoise}. For binary counterfeit weights Bshouty obtained the limiting one-quarter substitution threshold \cite{bnoise}. Here both the alphabet and the relations among its elements can vary. A
+single integer matrix must control a possible collision in every characteristic while
+retaining the gain from repeated values.
+
+For real weights, $p(G)=\infty$. With $s=n$ and a fixed number of unknown values, the optimal
+order is $n/\log n$. With $s=n$ and $q$ growing like $\log n$, it is $n\log\log n/\log n$.
+Allowing a different value at every position brings the cost up to order $n$. For a counter
+taking values modulo two, subset sums of dense inputs need order $n$ even if the only nonzero
+value is one. The prefix length uses the assumed parameter bounds. The existence proof leaves
+the computational cost of constructing a schedule and decoding its answers open.
+
+To see the connection with balanced weighings more precisely, the difference between two dense
+real inputs with $q$ nonzero values each takes at most $(q+1)^2$ values. A common offset makes
+those values positive and preserves every balanced test. Alon and Kozlov's criterion forces
+such a kernel vector to be constant, and a singleton test detects a nonzero constant. Their
+inverse bound for $q<n^{1/4}$, with zero padding if necessary, gives $O(n\log(q+1)/\log n)$
+subset tests. For $q\ge n^{1/4}$ the singleton tests already have this order. The issue for a
+general group appears even in the four triple tests above. A collision modulo nine can survive
+modulo three only after a change of labels.
+
+\section{Cyclic witnesses and exceptional primes}\label{sec:cyclic}
+
+A schedule corrects $t$ arbitrary substitutions precisely when its minimum distance exceeds
+$2t$. Indeed, Hamming balls of radius $t$ about the possible transcripts must be disjoint. If
+two transcripts differ in at most $2t$ positions, dividing those positions into two sets of
+size at most $t$ produces a word in both balls.
+
+The following fact holds for any family $X(G)\subseteq G^n$ preserved under coordinatewise
+application of every zero-preserving set map $G\to K$ between the groups considered. Such a
+map may merge several labels or erase them. Support restrictions, upper bounds on the number
+of values and prescribed equalities between coordinates all have this property.
+
+\begin{theorem}\label{thm:cyclic}
+
+Fix an integer matrix $A$ and a set $E$ of its rows. Distinct admissible vectors agree on all
+rows in $E$ over $G$ if and only if they do over at least one of its infinite cyclic or
+prime-order cyclic subgroups. Consequently the minimum transcript distance is exactly the
+minimum of the distances for those subgroups, identifying isomorphic cyclic groups. If a
+family contains fewer than two vectors use $+\infty$ for its minimum distance.
+\end{theorem}
+
+\begin{proof}
+
+Take a witnessing pair $x,y$ and put $z_i=x_i-y_i$. The subgroup $H$ generated by the $z_i$ is
+nonzero and finitely generated. If it has a free summand, projection gives a nonzero
+homomorphism $h:H\to\mathbb Z$, and $G$ contains an infinite cyclic subgroup. Otherwise $H$ is
+finite and has a cyclic prime-order quotient $\mathbb F_p$, and $G$ contains a subgroup of
+that order. Use such an $h$. At least one $h(z_i)$ is nonzero because the $z_i$ generate $H$.
+
+The map is defined only on differences so far. For every coset of $H$ meeting the input labels
+choose a representative $t$, with $t=0$ for $H$ itself. Relabel $a$ in that coset by
+$f(a)=h(a-t)$ and extend arbitrarily to the remaining cosets, preserving zero. Each $x_i$ and
+$y_i$ lie in the same coset. Thus $f(x_i)-f(y_i)=h(z_i)$. The new inputs are admissible,
+differ somewhere, and still agree on every row of $E$ because $h$ is additive on $H$.
+Conversely the subgroup embeds in $G$ and preserves all equalities and inequalities. Apply the
+equivalence to the agreement rows of a minimum-distance pair. This proves the theorem.
+\end{proof}
+
+For the opening example, reducing 4 and 1 modulo three sends both to 1. Their differences
+generate $\{0,3,6\}$ in $\mathbb Z/9$. Choosing 1 as the representative of their coset and
+sending 3 to 1 sends the two labels to 1 and 0. Their triples still agree, now modulo three.
+This illustrates why recentering the labels matters.
+
+\subsection{A finite certificate for a given matrix}\label{sec:smith}
+
+\begin{proposition}\label{prop:smith}
+
+For fixed $n,s,q$, an integer matrix $A$, and a set $E$ of its rows, there are two
+possibilities. Either $A_E$ identifies two distinct inputs over every nontrivial abelian
+group, or there is a computable finite set of primes $\mathcal P$ such that a collision occurs
+over $G$ exactly when $G$ contains an element of order $p$ for some $p\in\mathcal P$.
+\end{proposition}
+
+\begin{proof}
+
+For $X_{s,q}$, prescribe the support and a label at each allowed position of each of the two
+signals. There are finitely many such pairs of patterns. Use separate vertices for the unknown
+labels of each signal and one common vertex for zero. Each coordinate is an oriented edge from
+its label in $y$ to its label in $x$. Its value in $x-y$ is the difference of the endpoint
+values. Choose a spanning forest of this graph and give its $d$ edges independent oriented
+differences $w\in G^d$. Assigning these differences to the forest determines every edge
+difference by adding along its unique forest path. Conversely every $w$ is realized by
+assigning vertex potentials along the forest, starting at zero in each component and using the
+zero vertex as root in its component. The patterns allow coincident or zero values, so every
+assignment is legal.
+
+In coordinates $x-y=Cw$ for an integer matrix $C$ with entries $0,1,-1$. Its forest rows form
+an identity matrix. Ignore $d=0$, which yields only equal inputs. For a set $E$ of agreement
+rows, form $D=A_E C$. Its integer Smith normal form has nonzero invariant factors
+$a_1,\ldots,a_\rho$. Unimodular row and column operations are invertible on powers of every
+abelian group. If $\rho<d$, choosing a nonzero element on a free column gives a collision in
+every nontrivial group. If $\rho=d$, a nonzero kernel exists exactly when $G$ has an element
+of prime order dividing some $a_i$. Indeed, $a_i g=0$ for some $g\ne0$ exactly when $G$
+contains such a prime-order element. A nonzero kernel element gives distinct vectors because
+the forest rows recover $w$. Taking the union over the finite pattern pairs gives all the
+groups that fail these tests. Varying $E$ determines the full minimum-distance profile of the
+schedule.
+\end{proof}
+
+For four tests each omitting one of four entries, the matrix is $J-I$, where $J$ is all ones.
+Its invariant factors are $1,1,1,3$. It is injective even modulo two, yet modulo six inputs
+differing by a constant two can be indistinguishable. Both of these groups have least prime
+order two. The full set of prime orders determines the performance of an \emph{individual} schedule,
+while the least one will suffice for the optimal order in Theorem~\ref{thm:rate}.
+
+\section{Concentration with unknown labels}\label{sec:concentration}
+
+\begin{lemma}\label{lem:point}
+
+Work in $\mathbb Q$ or $\mathbb F_p$. Put $p=\infty$ in estimates for $\mathbb Q$. For signed
+rows exclude $p=2$. Let $v$ have $r\ge1$ nonzero entries. For independent fair binary entries
+or independent fair signs in a row $R$, uniformly over the target $a$,
+\[
+\Pr(Rv=a)\ \le\ Q_{r,p}:=\min\{1/2,\ 1/p+C/\sqrt r\}.
+\]
+\end{lemma}
+
+\begin{proof}
+
+Fixing all but one active entry gives the first bound. For a subset row over $\mathbb F_p$,
+Fourier inversion and the triangle inequality bound the probability by
+$p^{-1}\sum_{t=0}^{p-1}\prod_{j=1}^r|\cos(\pi t v_j/p)|$. Hölder's inequality with $r$ equal
+exponents bounds this by $p^{-1}\sum_t|\cos(\pi t/p)|^r$, since multiplication by each $v_j$
+permutes the residues and the absolute cosine is periodic in the residue. For signed rows use
+$2v_j$ in place of $v_j$. The inequality $|\cos(\pi u)|\le\exp(-c\,\mathrm{dist}(u,\mathbb
+Z)^2)$ gives a Gaussian sum bounded by $1/p+C/\sqrt r$ on comparing the positive terms with
+the integral on $[0,\infty)$. Over $\mathbb Q$, clear denominators including that of the
+target and reduce modulo arbitrarily large primes preserving all $r$ nonzero entries. Every
+rational equality survives reduction. In particular $-\log Q_{r,p}\ge c_0 L_{r,p}$ for an
+absolute $c_0>0$, where $L_{r,p}=\log(1+\min(r,p))$. This follows from the half bound at
+bounded $\min(r,p)$ and the inverse square-root bound in that minimum for larger values.
+\end{proof}
+
+A probability estimate for one specified difference does not yet handle unspecified labels.
+The following exposure argument chooses a witness after revealing a small collection of tests.
+Throughout, $R_S$ denotes the restriction of a measurement row to the coordinate set $S$.
+
+\begin{lemma}\label{lem:exposure}
+
+Fix $\beta=1-2\eta>1/2$, a specified set $S$ of $r$ coordinates and an integer matrix $B$ with
+$r$ rows. We consider witnesses $Bu$ having all $r$ coordinates nonzero. Suppose
+$\operatorname{rank}B\le d$ in the field at hand. For $m$ independent rows, if
+$d\le\epsilon_\eta m$ for a sufficiently small $\epsilon_\eta>0$, then
+\[
+\Pr\{\text{some such }Bu\text{ vanishes on at least }\beta m\text{ tests}\}
+\le \exp(-c_\eta m L_{r,p}).
+\]
+\end{lemma}
+
+\begin{proof}
+
+To prove the bound, take a bad witness and select a basis from the rows $R_S B$ of its
+vanishing tests. The basis uses an index set $I$ of size $h\le d$. For a fixed candidate $I$,
+expose only its rows. If their joint kernel admits a $u$ with $Bu$ nonzero everywhere, choose
+one by a fixed enumeration of the field vectors. Every row in the span of the exposed rows
+kills this choice. Hence, whenever $I$ serves as the basis of a bad witness, at least $\beta
+m-h$ of the remaining $m-h$ independent tests kill the chosen vector. This implication allows
+us to test a single vector after exposure. It never conditions the remaining tests on $I$
+actually being a basis.
+
+Choose $\epsilon_\eta$ initially so small that
+$(\beta-\epsilon_\eta)/(1-\epsilon_\eta)>1/2+\delta_\eta$ for some $\delta_\eta>0$. Each
+remaining trial has probability at most $Q_{r,p}$. When $L_{r,p}$ is bounded, the binomial
+upper tail above $1/2+\delta_\eta$ is at most $\exp(-c_\eta m)$ by the Chernoff bound. When
+$L_{r,p}$ exceeds a constant depending only on $\eta$, the direct bound $2^m Q_{r,p}^{\,\beta
+m-h}$ is at most $\exp(-c'_\eta m L_{r,p})$. The at most $\sum_{h\le d}\binom mh\le\exp(m
+H(\epsilon_\eta))$ basis choices, with $H$ binary entropy in natural logarithms, are absorbed
+by further decreasing $\epsilon_\eta$. Here $L_{r,p}\ge\log2$. This proves the estimate,
+including rank zero and support one.
+\end{proof}
+
+\section{A single schedule for all parameters}\label{sec:prefix}
+
+\begin{proof}[Proof of the upper bounds in Theorem~\ref{thm:rate}]
+
+For the moment fix $s,q$ and an integer threshold $P\ge2$. We will cover $\mathbb Q$ and every
+prime $p\ge P$ simultaneously. Signed rows cover the odd primes in that range. Only thresholds
+up to $\max(2,s)$ will be needed. Put $F=F(n,s,q,P)$ and $m=\lceil K_\eta F\rceil$, where the
+constant will be chosen large. Distinct inputs have a difference supported on some $S$ of size
+$1\le r\le\min(2s,n)$.
+
+If $q<P$, choose the two label assignments on $S$. There are at most $(q+1)^{2r}$ choices.
+Their difference is $Bu$ with $2q$ unknown scalar labels in $u$ and at most one $+1$ and one
+$-1$ in each row of $B$. A zero label contributes no variable. All coordinates outside $S$
+cancel, so forgetting their labels only enlarges the event being bounded. Use $d=\min(2q,r)$.
+If $q\ge P$, allow every difference on $S$ and take $B=I_r$, $d=r$. In the first case $F\ge q$
+since $\log(1+t)/t$ decreases for $t>0$ and $q\le s$. In the second $F\ge s$. Thus $d/m$ can
+be made arbitrarily small uniformly.
+
+There are infinitely many primes but only finitely many distinguishable rank tests for one
+pattern. For any agreement set $E$, the rows of $A_{E,S}B$, stacked with the rows of $B$, have
+entries of absolute value at most $r$ and rank at most $d$ over $\mathbb Q$ and over every
+prime field. Every minor of size at most $d$ is bounded in absolute value by $M=(r\sqrt d)^d$.
+For $p>M$, every submatrix of this stack has the same rank modulo $p$ and over $\mathbb Q$, by
+the minor criterion and Hadamard's inequality. If $Bu$ has full support modulo $p$ and the
+rows in $E$ kill it, no row of $B$ belongs to the span of $A_{E,S}B$ modulo $p$. The same
+holds over $\mathbb Q$. On the rational kernel each of the $r$ coordinate functionals is
+therefore nonzero. Finitely many proper subspaces cannot cover a vector space over the
+infinite field $\mathbb Q$, so a single rational witness has all $r$ entries nonzero. This
+argument uses the same $E$ and creates no extra count of choices for $E$.
+
+For a fixed support and pattern, union the probability estimate first over primes $P\le
+p\le(r+1)^2$. There are at most $(r+1)^2$ of these and $L_{r,p}\ge L_{r,P}$. Each remaining
+prime up to $M$, and $\mathbb Q$, has $L_{r,p}=\log(1+r)$ when $p>(r+1)^2$. There are at most
+$1+M$ such cases. The logarithm of this count is $O(d\log(1+r))$ and is absorbed by increasing
+$K_\eta$, since $F\ge d/2$. Primes exceeding both cutoffs are already covered by the rational
+event. This division is important for small $P$, where paying the largest prime count against
+the weakest probability bound would lose the claimed rate.
+
+It remains to sum over the supports and patterns. Write $b=\min(q,P)$. Uniformly for $1\le r\le\min(2s,n)$,
+\[
+r\bigl(\log(en/r)+\log(1+b)\bigr)
+\le C F L_{r,P}.
+\]
+
+For $\sqrt s\le r\le s$, the denominator $L_{r,P}$ is at least half of $L_{s,P}$ and
+$r\log(en/r)$ is increasing on $[1,n]$. For $s\le r\le 2s$ use $L_{r,P}\ge L_{s,P}$ and
+$r\le2s$. For $r<\sqrt s$, bound the numerator by $\sqrt s(\log(en/s)+\log s+\log(1+b))$ and
+use $L_{r,P}\ge\log2$. Dividing this bound by $F$ costs at most a constant because
+$(1+\log(1+s))^2/\sqrt s$ is bounded. This proves the comparison. It pays for $\binom nr$, the
+label choices where used, and the factor $(r+1)^2$ above.
+
+After increasing $K_\eta$, the failure probability for each $r$ is at most $\exp(-c_\eta
+K_\eta F L_{r,P})$, with $c_\eta$ independent of the parameters. Also $F\ge c\log(n+1)$
+uniformly. When $s\le\sqrt n$ this follows from $\log(en/s)$ and $s/\log(1+s)\ge1$. When
+$s>\sqrt n$, use $F\ge s/\log(1+s)$ and $\sqrt n/\log(1+n)\ge c\log(1+n)$ with an absolute
+$c>0$. Start with one ordered array of independent fair binary entries, using its
+corresponding sign array for signed tests. The failure bounds concern its indicated prefixes
+and require no independence between different prefixes. A union bound over at most $n$ support
+sizes, $n^2$ pairs $(s,q)$, $\max(2,n)$ thresholds and the two row conventions gives total
+probability less than one by choosing $K_\eta$ sufficiently large. Fix any successful array.
+
+For a group $G$ use $P=\max(2,\min(s,p(G)))$, also when $p(G)=\infty$. This gives the same $F$
+since $q\le s$. Its prefix handles the rationals and every required prime. Distances for
+$\mathbb Z$ and $\mathbb Q$ agree by clearing denominators or by Theorem~\ref{thm:cyclic}.
+Apply that theorem to any proposed pair with at least $(1-2\eta)m$ equal answers. The cyclic
+prefix guarantees rule out every such pair. Its minimum distance thus exceeds $2\eta m$, which
+suffices through $\lfloor\eta m\rfloor$ substitutions.
+\end{proof}
+
+\section{Lower bounds and the substitution threshold}\label{sec:lower}
+
+\begin{proof}[Proof of the lower bounds in Theorem~\ref{thm:rate}]
+
+Choose $g$ of order $p=p(G)$ if finite and otherwise of infinite order. Use letters
+$0,g,\ldots,ug$ with $u=q$ in the infinite case and $u=\min(q,p-1)$ otherwise. The family
+includes at least $(u+1)^s$ vectors on the first $s$ coordinates and at least $\binom ns$
+binary support choices. Taking the larger shows that its logarithmic size is at least $c
+s(\log(en/s)+\log(1+\min(q,p)))$. Indeed $(u+1)\ge2$, $\binom ns\ge(n/s)^s$ and $\log(u+1)$ is
+comparable to $\log(1+\min(q,p))$. Each signed or subset query has at most $\min(p,2su+1)$
+answers, omitting $p$ in the infinite case. Its log is at most $C\log(1+\min(s,p))$ since
+$u\le s$. The same bound applies at every node of an adaptive truthful decision tree. Counting
+its leaves proves the claimed lower bound.
+
+For signed tests an order-two element $g$ makes $ge_1$ and $ge_2$ identical on every row.
+Otherwise choose any $g\ne0$. On each signed row exactly one of the pairs $(ge_1,ge_2)$ and
+$(ge_1,-ge_2)$ differs, so some pair is at distance at most $\lfloor m/2\rfloor$. For subset
+tests, choose any $g\ne0$. The $n+1$ inputs $0,ge_1,\ldots,ge_n$ give binary answer words with
+symbols $0,g$. In each row at most $(n+1)^2/4$ unordered pairs differ. Averaging gives a pair
+at distance at most $m(n+1)/(2n)$. Distinguishing these binary words requires
+$m\ge\log_2(n+1)$. Thus rounding vanishes as $n$ grows, proving the asymptotic upper limit
+$1/4$ already at $s=q=1$. The same distance argument permits a mixture of substitutions and
+known erasures whenever twice the substitution count plus the erasure count is less than the
+guaranteed distance.
+\end{proof}
+
+\section*{AI Assistance Disclosure}
+
+OpenAI's GPT-6.2 Astra was used in an autoresearch loop and reported this discovery to the author.
+
+\begingroup\small
+\begin{thebibliography}{9}
+\bibitem{lindstrom}
+B. Lindstr\"om, \emph{On a combinatorial problem in number theory}, Canadian Mathematical
+Bulletin \textbf{8} (1965), 477--490.
+\href{https://doi.org/10.4153/CMB-1965-034-2}{doi:10.4153/CMB-1965-034-2}.
+
+\bibitem{alon}
+N. Alon and D. N. Kozlov, \emph{Coins with arbitrary weights}, Journal of Algorithms
+\textbf{25} (1997), 162--176.
+\href{https://doi.org/10.1006/jagm.1997.0871}{doi:10.1006/jagm.1997.0871}.
+
+\bibitem{bm}
+N. H. Bshouty and H. Mazzawi, \emph{On parity check $(0,1)$-matrix over $\mathbb Z_p$}, SIAM
+Journal on Discrete Mathematics \textbf{29} (2015), 631--657.
+\href{https://doi.org/10.1137/120881129}{doi:10.1137/120881129}.
+
+\bibitem{bmnoise}
+N. H. Bshouty and H. Mazzawi, \emph{Algorithms for the coin weighing problems with the
+presence of noise}, Electronic Colloquium on Computational Complexity, Report TR11-124 (2011).
+\href{https://eccc.weizmann.ac.il/report/2011/124/}{ECCC TR11-124}.
+\bibitem{bnoise}
+N. H. Bshouty, \emph{On the coin weighing problem with the presence of noise}, in
+APPROX/RANDOM 2012, Lecture Notes in Computer Science \textbf{7408}, 471--482.
+\href{https://doi.org/10.1007/978-3-642-32512-0_40}{doi:10.1007/978-3-642-32512-0\_40}.
+\end{thebibliography}
+\endgroup
+
+\end{document}

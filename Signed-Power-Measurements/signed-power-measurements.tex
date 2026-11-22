@@ -1,0 +1,457 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,tabularx}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!40!black,citecolor=blue!40!black,
+            urlcolor=blue!40!black]{hyperref}
+
+\newcommand{\manuscripttitle}{Detecting signed powers over fields,\\with an application to hidden binary wirings}
+\newcommand{\manuscriptkeywords}{detecting matrix, signed power, algebraic number, inversion count, coordinate permutation}
+\hypersetup{
+  pdftitle={Detecting signed powers over fields, with an application to hidden binary wirings},
+  pdfauthor={Joseph M. Shunia},
+  pdfsubject={Detecting matrices for signed powers and binary coordinate permutations},
+  pdfkeywords={\manuscriptkeywords}
+}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\numberwithin{equation}{section}
+\setlength{\emergencystretch}{1.5em}
+\addtolength{\skip\footins}{6pt}
+
+\title{\vspace{-1.5\baselineskip}%
+  \manuscripttitle}
+\author{Joseph M. Shunia\thanks{Independent researcher, Ann Arbor, Michigan, United States.
+  Email: \href{mailto:jshunia@gmail.com}{\texttt{jshunia@gmail.com}}.}}
+\date{November 22, 2026}
+
+\begin{document}
+\maketitle
+\vspace{-\baselineskip}
+
+\begin{abstract}
+We determine the number of signed-sum queries required to recover $n$ unknown entries that are
+zero or signed powers of a known field element. For any fixed substitution fraction below one
+quarter, a transcendental radix or a root of unity in characteristic zero requires order
+$n/\log n$ queries. An algebraic radix of infinite order requires order $n\log\log n/\log n$.
+In odd characteristic the order is linear, and in characteristic two recovery is impossible
+for $n\ge2$. The algebraic upper bound uses a height argument to shorten exponent gaps and
+finite quotients that preserve large additive orders. As an application, we recover a hidden
+permutation and complementation of binary coordinates from inversion counts at the same rate
+as for powers of two.
+\\[2mm]
+{\bf 2020 Mathematics Subject Classification:} 94B25 (primary), 11R04, 05D40 (secondary).
+\\[2mm]
+{\bf Keywords:} \manuscriptkeywords.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+The equality $\alpha^e+\alpha^e=\alpha^{e+1}$ holds for $\alpha=2$. If $\alpha$ is an
+indeterminate, a sum of its powers instead records a separate coefficient at every exponent.
+It is natural to ask how strongly this distinction affects recovery of a vector when each
+observation is a single signed sum. The detecting matrices of Lindstr\"om \cite{lindstrom}
+treat bounded integer alphabets. The noisy adder channel of Erdo\u{g}an, Maringer and
+Polyanskii \cite{emp} already exhibits a one-quarter error threshold for binary signatures.
+Here the exponent of even one unknown entry may be arbitrarily large.
+
+Fix a field $K$ and $\alpha\in K^\times$. An unknown vector has $n$ independently chosen
+coordinates in $D_\alpha=\{0\}\cup\{\pm\alpha^e:e\in\mathbb Z\}$. A query chooses one sign per
+coordinate and returns their signed sum in $K$. A fixed $m$-row sign matrix $A$ produces the
+word $Ax$. Answers are exact field elements, and cost is the number of queries. The radix and
+field are known. We ask for unique recovery of every input after at most $\lfloor\eta
+m\rfloor$ arbitrary answer substitutions. Write $M_\alpha(n,\eta)$ for the minimum positive
+fixed length, and set it to infinity when recovery is impossible.
+
+\begin{theorem}\label{thm:class}
+
+For every fixed $0\le\eta<1/4$, the following table gives the order of $M_\alpha(n,\eta)$ as
+$n$ grows. The field and radix are fixed in each row. Algebraicity and transcendence in
+characteristic zero are over $\mathbb Q$.
+
+\begin{center}\normalfont
+\begin{tabularx}{\linewidth}{@{}Xl@{}}
+\toprule
+Field and radix & Number of queries \\
+\midrule
+Characteristic zero, transcendental radix or root of unity & $\Theta(n/\log n)$ \\
+Characteristic zero, algebraic radix of infinite order & $\Theta(n\log\log n/\log n)$ \\
+Odd characteristic, every radix & $\Theta(n)$ \\
+Characteristic two, every radix & Impossible for $n\ge2$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The lower orders hold even for deterministic adaptive noiseless queries. In every recoverable
+case the supremum of asymptotically correctable fractions for fixed queries is $1/4$. The
+table also holds with exponents restricted to nonnegative integers.
+\end{theorem}
+
+In the transcendental case every fixed matrix has the same minimum transcript distance as it
+has on the ternary alphabet $\{-1,0,1\}$. The algebraic case requires a different reduction.
+Lenstra's height estimate for lacunary polynomials \cite{lenstra} splits a vanishing sum into
+shorter bands. We construct several finite quotients that together distinguish the shortened
+powers and in which one repeated difference gives enough distinct signed sums.
+
+For each fixed $\eta<1/4$ a single choice of infinite sign rows for each dimension has the
+following property. Every fixed radix and field in a recoverable case eventually admits a
+prefix of the indicated order. Prefix lengths and the first dimension for which they suffice
+may depend on the radix or characteristic.
+
+Section~\ref{sec:wiring} gives an integer-valued observation with exactly these measurement
+rows. The number of inversions of a permuted and complemented binary word, after an output
+mask is applied, is an affine function of a sum of signed powers of two. This provides both an
+explicit decoder from $n$ noiseless counts and a smaller family of masks that corrects
+substitutions.
+
+\section{Characteristic and the finite-alphabet cases}\label{sec:elementary}
+
+In characteristic two all signs equal one. Swapping the inputs $(1,0)$ and $(0,1)$ gives the
+same answer to every query. In odd characteristic restrict first to the $2^n$ binary inputs.
+Each query then has at most $p$ possible answers, even if chosen adaptively. This forces $m\ge
+n\log 2/\log p$. For the upper bound draw independent fair signs. For any fixed nonzero
+$v\in\mathbb F_p^n$, condition on every sign except one at a nonzero coordinate. Its two
+outcomes differ, so a row vanishes on $v$ with probability at most $1/2$. By Hoeffding's
+inequality \cite{hoeffding}, the probability of vanishing on at least $(1-2\eta)m$ of the rows
+is at most $\exp[-2(1/2-2\eta)^2m]$. A union bound over fewer than $p^n$ vectors gives the
+desired distance for $m=C_{p,\eta}n$ with exponentially small failure probability. For any
+difference vector over $K$, take an $\mathbb F_p$-linear functional on the span of its
+coordinates that is nonzero on one coordinate. Each nonzero projected answer certifies an
+unequal original answer. This proves the upper bound even for unrestricted inputs in $K^n$.
+
+In characteristic zero the binary inputs give $2^n$ possibilities and at most $2n+1$ answers
+per query. For a fixed finite alphabet, the random row argument in Section~\ref{sec:count}
+gives the matching $O(n/\log n)$ upper bound. This applies to roots of unity. For
+transcendental $\alpha$, the Laurent monomials $\alpha^e$ are linearly independent over
+$\mathbb Q$. Express each input as a list of ternary coefficient vectors, one for each
+exponent. A row agrees on two inputs exactly when it agrees on every layer. Any two distinct
+inputs differ on at least one layer. Their transcript distance is therefore at least the
+minimum ternary distance. The ternary alphabet itself lies in $D_\alpha$, giving equality for
+every matrix. Clearing a common monomial handles negative exponents.
+
+For the error ceiling use the two attainable differences $(2,2,0,\ldots)$ and
+$(2,-2,0,\ldots)$ of signed unit vectors with arbitrary identical remaining coordinates in
+each pair. In characteristic different from two, exactly one gives a nonzero answer on each
+row. The two distances sum to $m$, so one is at most $\lfloor m/2\rfloor$. Correcting $t$
+substitutions requires distance at least $2t+1$. This proves the ceiling with the
+finite-length rounding intact.
+
+\section{The lower bound for an algebraic radix}\label{sec:lower}
+
+Let $\alpha$ be algebraic of infinite order and put $E=\mathbb Q(\alpha)$, of degree $d$. The
+companion matrix for multiplication by $\alpha$ in the power basis of $E$ has rational
+entries. Write it $U/a$, where $a$ is a positive integer and $U$ is integral. For $0\le e<L$,
+the power basis coordinates of $a^L\alpha^e$ are integers bounded by $C_\alpha^L$ in
+magnitude. Indeed they are the entries of $a^{L-e}U^e$ applied to the first basis vector, and
+one may take $C_\alpha\ge\max(2,a,\|U\|_\infty)$.
+
+Take $L=\lfloor\log n/(\log\log n)^2\rfloor$ for sufficiently large $n$. The $L^n$ positive
+power vectors are all distinct. After scaling by $a^L$, each answer belongs to an integer box
+with at most $(2nC_\alpha^L+1)^d$ points. A depth-$m$ adaptive tree has at most that many
+choices at each node, so
+\[
+m\ \ge\ \frac{n\log L}{d\log(2nC_\alpha^L+1)}
+=\bigl(1/d-o(1)\bigr)\frac{n\log\log n}{\log n}.
+\]
+
+This part uses only bounded-degree arithmetic and gives the lower order for the noisy fixed problem as well.
+
+\section{Shortening the gaps between exponents}\label{sec:gaps}
+
+Use normalized absolute values $|\cdot|_v$ on $E$ extending the usual absolute values on
+$\mathbb Q$, with local weights $w_v=[E_v:\mathbb Q_v]/d$. For $z\ne0$, the product formula
+says $\prod_v |z|_v^{w_v}=1$. The archimedean weights sum to one. Put
+\[
+\lambda=\sum_v w_v\log^+|\alpha|_v .
+\]
+
+Here $\lambda>0$. If it were zero, $\alpha$ would be an algebraic integer with all conjugates
+of absolute value at most one. The monic minimal polynomials of all its positive powers would
+have uniformly bounded degrees and integer coefficients, by the elementary symmetric formulas.
+There would be only finitely many possible powers, contrary to infinite order.
+
+\begin{lemma}\label{lem:gap}
+
+Let $\alpha$ be algebraic of infinite order and put $B=\lfloor\log(2n)/\lambda\rfloor+1$. For
+each pair of distinct inputs there is a pair using only exponents in $[0,2nB]$ such that
+exactly the same sign rows give equal answers.
+\end{lemma}
+
+\begin{proof}
+
+Fix two inputs. Translate their entire finite set of occurring exponents so its minimum is
+zero. This multiplies every row difference by the same nonzero scalar. Each row difference is
+a signed sum of at most $2n$ powers. Split at consecutive used exponents $u<v$, and suppose
+the low part is equal to the negative of the high part, with common nonzero magnitude at each
+place. At an expanding place the low part is bounded by $|\alpha|_v^u$ times $2n$ at
+archimedean places and times one elsewhere. At a contracting place use the high part and
+$|\alpha|_v^v$ instead. At neutral places only the archimedean factor is needed.
+Multiplication and the product formula give
+\[
+1\le 2n\,\exp[-(v-u)\lambda].
+\]
+
+Consequently a gap of at least $B=\lfloor\log(2n)/\lambda\rfloor+1$ splits a zero sum into two zero sums.
+
+Replace every gap larger than $B$ by $B$. Inside each resulting band all exponents have
+shifted together, so zero within that band is preserved. Splitting at all cuts, before and
+after shortening, proves that exactly the same rows give equal answers. Distinct inputs stay
+distinct because the exponent map is strictly increasing and two signed powers at distinct
+exponents cannot coincide for a nontorsion radix. Every shortened exponent is at most $R=2nB$.
+The shortening may depend on the pair, since its role is to certify collisions.
+\end{proof}
+
+\section{Cyclotomic quotients with large additive orders}\label{sec:projection}
+
+Write $T=\mathbb Z[\alpha,\alpha^{-1}]$. Let $S$ contain the archimedean places and the finite
+places with $|\alpha|_v\ne1$. Define $\|z\|_S=\prod_{v\in S}|z|_v^{w_v}$. Every nonzero $z\in
+T$ satisfies $\|z\|_S\ge1$ by the product formula, since it has absolute value at most one
+outside $S$. For positive integers $a$, $\|a\|_S\le a$. Also
+$\|1\pm\alpha^r\|_S\le2e^{r\lambda}$ whenever the expression is nonzero and $r\ge0$.
+
+\begin{lemma}\label{lem:proj}
+
+Fix $d+1$ distinct odd primes. For every sufficiently large integer $h$, one can choose a
+prime $p$ from this finite list such that, in the quotient
+\[
+T/\bigl(\Phi_p(\alpha^h)\bigr),\qquad \Phi_p(X)=1+X+\cdots+X^{p-1},
+\]
+
+the powers of $\alpha$ have period exactly $ph$, zero and both signs give $2ph+1$ different
+letters, and the additive order of twice any nonzero letter difference is at least $c_\alpha
+e^{h\lambda/2}$.
+\end{lemma}
+
+\begin{proof}
+
+To choose $p$, consider the finite sets of primitive $p$-th roots on the unit circle. They are
+disjoint for different primes. Choose disjoint neighborhoods of these sets. Each conjugate of
+$\alpha$ on the unit circle, raised to the $h$-th power, rules out at most one prime. At most
+$d$ primes are ruled out. For the chosen prime, $|\Phi_p(z)|$ is bounded below by a fixed
+positive constant at every one of those conjugates raised to $h$, by compactness outside the
+neighborhoods. At an expanding archimedean place the leading term has asymptotic ratio one to
+the whole polynomial, and at a contracting archimedean place the value tends to one. At the
+corresponding finite places the ultrametric inequality gives the exact absolute value from the
+unique extreme term. The finite list of primes makes all bounds uniform in the choice. Thus
+$D=\Phi_p(\alpha^h)$ satisfies
+\[
+\|D\|_S\ \ge\ c_\alpha e^{(p-1)h\lambda}.
+\]
+
+The identity $(\alpha^h-1)D=\alpha^{ph}-1$ gives a period dividing $ph$. The quotient is
+additively generated by the first $ph$ powers, since the image of $\alpha$ is a unit of period
+dividing $ph$. Tensoring with $\mathbb Q$ gives $E/(D)=0$. The quotient is therefore a
+finitely generated torsion abelian group and is finite.
+
+Reduce any two formal signed letters using their exponents modulo $ph$. After multiplying
+their difference by a unit and possibly interchanging them, it is represented by $w=1$ or
+$w=1\pm\alpha^r$ with $0\le r\le ph/2$, using the shorter circular difference. If the formal
+letters differ this $w$ is nonzero in $E$. Suppose $2a w$ vanishes in the quotient for some
+positive integer $a$. Then $2aw=Dz$ for a nonzero $z\in T$, and therefore
+\[
+c_\alpha e^{(p-1)h\lambda}
+\ \le\ \|D\|_S\ \le\ \|2aw\|_S\ \le\ 4a e^{r\lambda}.
+\]
+
+Since $(p-1)h-r\ge h/2$, the claimed lower bound for $a$ follows after adjusting $c_\alpha$.
+For large $h$ this excludes even equality of distinct formal letters, proving the exact period
+and cardinality assertions.
+\end{proof}
+
+\section{Choosing one matrix for all projected differences}\label{sec:count}
+
+\begin{proof}[Completion of the proof of Theorem~\ref{thm:class}]
+
+Choose $H=\lceil C_\alpha\log n\rceil$ large enough that Lemma~\ref{lem:proj} gives additive
+order greater than $n$ for every $h\in[H,2H]$ and that $2^H>R=2nB$. The least common multiple
+of all the integers in this interval is at least $\binom{2H}{H}\ge2^H$. For the first
+inequality, every positive integer up to $2H$ divides a member of the interval, and the
+valuation of the central binomial coefficient at any prime $q$ is at most
+$\lfloor\log_q(2H)\rfloor$, by the factorial valuation formula. The second inequality follows
+by multiplying $(H+i)/i\ge2$ for $1\le i\le H$.
+
+The projections jointly distinguish the shortened letters. For equal signs and differing
+exponents in $[0,R]$, some $h$ fails to divide their difference, and hence $ph$ also fails to
+divide it. Zero and opposite signs are distinguished in each projection. Each projection has
+$O_\alpha(\log n)$ letters.
+
+For completeness, draw all entries of $A$ as independent fair signs. Consider a nonzero vector
+of projected differences with $k$ nonzero entries. The order bound ensures that changing the
+sign on one nonzero entry changes a row answer, so the row collision probability is at most
+$1/2$. Over all $h$, there are at most $\exp[O_\alpha(n/\log^2 n)]$ patterns with $k\le
+n/\log^3 n$, by choosing the support and the ordered pair of letters in each position.
+Hoeffding's inequality bounds the probability that one pattern vanishes on at least
+$(1-2\eta)m$ rows by $\exp[-2(1/2-2\eta)^2m]$. Their total failure probability is summable in
+$n$ for either sublinear rate in the table.
+
+For larger supports, the number of available letter differences in a fixed projection is
+$O_\alpha(\log^2 n)$. A particular nonzero difference $w$ occurs at least $\ell\gg_\alpha
+n/\log^5 n$ times. Conditional on all other signs, these copies contribute $(2j-\ell)w$, where
+$j$ is binomial with parameters $\ell,1/2$. All these values differ because the order of $2w$
+exceeds $n$. By the central binomial bound, collision in one row has probability at most
+$q_n=C_\alpha\log^{5/2}n/\sqrt n$. Over all projections there are at most $\exp(2n\log\log
+n+O_\alpha(n))$ patterns. A fixed one agreeing on at least $(1-2\eta)m$ rows has probability
+at most $2^m q_n^{(1-2\eta)m}$, by taking a union over row subsets. With any fixed
+$\epsilon>0$ and
+\[
+m=\left\lceil\left(\frac4{1-2\eta}+\epsilon\right)\frac{n\log\log n}{\log n}\right\rceil ,
+\]
+
+the total dense failure probability is at most $\exp(-c_{\epsilon,\eta}n\log\log n)$ for
+sufficiently large $n$. Combined with the sparse bound this is summable. No independence
+between projections is needed.
+
+Thus every nonzero projected pattern differs on more than $2\eta m$ rows. Every distinct
+original pair has a differing projection after clipping. An unequal projected answer was
+unequal before projection and before clipping. This gives disjoint correction balls and proves
+the upper bound.
+
+For a fixed finite alphabet in characteristic zero use the same counting argument directly in
+its additive group. A nonzero difference has infinite additive order. The total number of
+patterns is now $\exp(O(n))$, and the repeated difference occurs $\gg n/\log^3 n$ times for
+larger supports. Thus $m=C_{\alpha,\eta} n/\log n$ suffices with summable failure probability.
+This completes every row of the table.
+
+Finally sample an infinite list of independent fair rows for each $n$, and use its prescribed
+prefix in each case. Summability and the first Borel--Cantelli lemma give eventual success for
+each fixed case with probability one. There are countably many algebraic radices up to their
+rational minimal polynomial. Embedding the generated field elsewhere preserves all row
+equalities. All characteristic-zero transcendental radices share the same ternary criterion,
+and one prime-field estimate covers all extensions in each odd characteristic. The
+intersection still has probability one, proving the universal array assertion.
+\end{proof}
+
+\section{Recovering a hidden binary wiring from inversion counts}\label{sec:wiring}
+
+In the wiring problem, a box maps an $n$-bit word $z$ to the word whose bit $j$ is
+$z_{p(j)}\oplus u_j$, for an unknown permutation $p$ and flip mask $u$. Bits are numbered from
+least to most significant. A query chooses an additional output mask $a$ and returns the
+number $I(a)$ of unordered input pairs whose unsigned order the masked box reverses.
+
+\begin{proposition}\label{prop:wire}
+
+Put $N=2^n$, let $r_j=\#\{i<j:p(i)<p(j)\}$ and set $c_j=(-1)^{u_j}2^{r_j}$. For each output mask $a$ the inversion count satisfies
+\begin{equation}\label{eq:wire}
+(N-1)-\frac{4I(a)}{N}=\sum_{j=0}^{n-1}(-1)^{a_j}c_j .
+\end{equation}
+The baseline count and any $n-1$ of the single-bit flip counts determine the wiring and all its flip bits.
+\end{proposition}
+
+\begin{proof}
+
+For distinct words $x,y$, compare the signs of $y-x$ and of the corresponding difference
+between the two masked outputs. The product of these signs is $+1$ for a concordant pair and
+$-1$ for an inversion. Summing over ordered pairs gives $N(N-1)-4I(a)$, since an inversion
+contributes twice. Now write $y=x\mathbin{\oplus}d$ and fix $d\ne0$. The input comparison uses
+the highest set bit of $d$, and the output comparison uses the highest output whose input bit
+is set in $d$. If the two comparisons use different wires, toggling the input bit of the first
+wire in both words reverses exactly one comparison. The contribution summed over $x$ is zero.
+
+If the two comparisons use the same wire $j$, then $d$ contains bit $p(j)$, and every other
+set bit of $d$ belongs to a wire lower in both orders. There are $r_j$ such wires, hence
+$2^{r_j}$ choices of $d$. Each gives the same contribution $N(-1)^{a_j+u_j}$. Summing over $j$
+and dividing by $N$ proves \eqref{eq:wire}.
+
+Write $I=I(0)$ and $I_j=I(e_j)$. Subtracting two instances of \eqref{eq:wire} gives
+$c_j=2(I_j-I)/N$. The baseline gives $\sum_j c_j$, so one omitted coefficient is recovered by
+subtraction. Its sign and magnitude, like those of every other coefficient, give $u_j$ and
+$r_j$. Insert each successive output label $j$ at the zero-based position $r_j$ in a list.
+After each insertion the list is ordered by the input positions of its labels. Thus the
+position of $j$ in the final list is $p(j)$. Conversely every sequence with $0\le r_j\le j$
+constructs a unique permutation this way.
+\end{proof}
+
+For a four-bit box, suppose the baseline count is 68. Flipping outputs 1, 2 and 3 gives 76, 36
+and 84. Since $N=16$, the three differences give coefficients $1,-4,2$. The baseline says all
+four coefficients add to $-2$, so the omitted coefficient is $-1$. The complete rank sequence
+is $(0,0,2,1)$. The ordered outputs after the final insertion are $(1,3,0,2)$, giving
+$p=(2,0,3,1)$. The negative signs mark outputs 0 and 2, so the hidden XOR mask is 5.
+
+Let $F(n)=n\log\log n/\log n$. The leading constants below apply both to inversion counts and to the integer radix problem.
+
+\begin{corollary}\label{cor:rate}
+
+Fix $0\le\eta<1/4$. Let $M(n,\eta)$ denote the minimum number of fixed masks for the wiring
+problem, or the minimum number of fixed sign rows for powers of an integer $b\ge2$ in
+characteristic zero. In either case
+\[
+\frac{2}{1-2\eta}\ \le\
+\liminf_{n\to\infty}\frac{M(n,\eta)}{F(n)}
+\ \le\ \limsup_{n\to\infty}\frac{M(n,\eta)}{F(n)}
+\ \le\ \frac{4}{1-2\eta}.
+\]
+Every deterministic adaptive noiseless protocol needs at least $(1-o(1))F(n)$ queries. The
+supremum of the asymptotically correctable substitution fractions is $1/4$.
+\end{corollary}
+
+\begin{proof}
+
+Every sign row corresponds to an output mask, and \eqref{eq:wire} is an invertible affine
+change in each answer. Section~\ref{sec:count} therefore gives the upper constant for wirings
+by taking $\alpha=2$, and for $b$ by taking $\alpha=b$.
+
+Take $L=\lfloor\log_b n/(\log\log n)^2\rfloor$ for large $n$. Fix the first $L$ entries at
+$1$. Independently allow each remaining exponent to take any of $0,\ldots,L-1$ and keep all
+signs positive. At $b=2$ every one of these $L^{n-L}$ assignments is a wiring by the insertion
+construction. Every signed sum is an integer of magnitude at most $n b^L=n^{1+o(1)}$.
+Consequently each node of even an adaptive query tree has at most $2nb^L+1$ possible answers
+on this family. Its leaves must distinguish $L^{n-L}$ inputs. Taking logs proves the
+$(1-o(1))F(n)$ lower bound.
+
+For fixed noiseless rows we can halve the leading logarithm of the number of outcomes per row
+on a typical input. Give the free exponents the independent uniform distribution. For a row
+sum $Y$, the bounded-sum inequality gives
+\[
+\Pr\!\left(\lvert Y-\mathbb EY\rvert>b^L\sqrt{2n\log n}\right)\le 2n^{-4}.
+\]
+
+For at most $n$ rows, at least half the inputs satisfy these bounds simultaneously for large
+$n$. If there are more rows, the desired lower bound already holds. Each typical row has at
+most $2b^L\sqrt{2n\log n}+2=n^{1/2+o(1)}$ possible integer values. Counting the transcripts
+for at least $L^{n-L}/2$ inputs now gives $(2-o(1))F(n)$ as the minimum noiseless fixed
+length. For an error-correcting schedule, deleting any $2\lfloor\eta m\rfloor$ rows leaves an
+injective schedule. Otherwise two full transcripts would be within twice the correction radius
+and could be changed into the same received word. This yields the lower constant
+$2/(1-2\eta)$.
+
+Use two coordinates of inputs in $\{-1,1\}^n$. These are all valid wiring coefficient vectors
+at $b=2$ by taking all insertion ranks zero. There is a pair of inputs with difference
+$(2,2,0,\ldots,0)$ and another pair with difference $(2,-2,0,\ldots,0)$. A sign row
+distinguishes exactly one of these two pairs, according to whether its first two signs agree.
+Their distances sum to $m$, so one is at most $\lfloor m/2\rfloor$. This proves the error
+ceiling.
+\end{proof}
+
+\section*{AI Assistance Disclosure}
+
+OpenAI's GPT-6.2 Astra was used in an autoresearch loop and reported this discovery to the author.
+
+\begingroup\small
+\begin{thebibliography}{9}
+\bibitem{lindstrom}
+B. Lindstr\"om, \emph{On a combinatorial problem in number theory}, Canadian Mathematical
+Bulletin \textbf{8} (1965), 477--490.
+\href{https://doi.org/10.4153/CMB-1965-034-2}{doi:10.4153/CMB-1965-034-2}.
+
+\bibitem{emp}
+G. Erdo\u{g}an, G. Maringer, and N. Polyanskii, \emph{Signature codes for a noisy adder
+multiple access channel} (2022). \href{https://arxiv.org/abs/2206.10735}{arXiv:2206.10735}.
+
+\bibitem{lenstra}
+H. W. Lenstra, Jr., \emph{Finding small degree factors of lacunary polynomials}, in
+\emph{Number Theory in Progress}, vol. 1, de Gruyter (1999), 267--276.
+\href{https://doi.org/10.1515/9783110285581.267}{doi:10.1515/9783110285581.267}.
+
+\bibitem{hoeffding}
+W. Hoeffding, \emph{Probability inequalities for sums of bounded random variables}, Journal of
+the American Statistical Association \textbf{58} (1963), 13--30.
+\href{https://doi.org/10.1080/01621459.1963.10500830}{doi:10.1080/01621459.1963.10500830}.
+\end{thebibliography}
+\endgroup
+
+\end{document}

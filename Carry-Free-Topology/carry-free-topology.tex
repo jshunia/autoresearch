@@ -1,0 +1,366 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,tabularx}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!40!black,citecolor=blue!40!black,
+            urlcolor=blue!40!black]{hyperref}
+
+\newcommand{\manuscripttitle}{Universal fundamental groups in carry-free multiplication\\and cyclic tile packings}
+\newcommand{\manuscriptkeywords}{carry-free product, flag complex, fundamental group, cyclic packing, word problem}
+\hypersetup{
+  pdftitle={Universal fundamental groups in carry-free multiplication and cyclic tile packings},
+  pdfauthor={Joseph M. Shunia},
+  pdfsubject={Fundamental groups of binary multiplication and cyclic packing complexes},
+  pdfkeywords={\manuscriptkeywords}
+}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\numberwithin{equation}{section}
+\setlength{\emergencystretch}{1.5em}
+\addtolength{\skip\footins}{6pt}
+
+\title{\vspace{-1.5\baselineskip}%
+  \manuscripttitle}
+\author{Joseph M. Shunia\thanks{Independent researcher, Ann Arbor, Michigan, United States.
+  Email: \href{mailto:jshunia@gmail.com}{\texttt{jshunia@gmail.com}}.}}
+\date{November 22, 2026}
+
+\begin{document}
+\maketitle
+\vspace{-\baselineskip}
+
+\begin{abstract}
+The supports of binary integers whose ordinary product with a fixed multiplier has no carries
+form a finite simplicial complex. We construct a single odd multiplier for which the
+fundamental group of one component contains every finitely presented group. The same
+conclusion holds for the connected packing complex of all translates of one tile on a finite
+prime cycle. In each example it is undecidable whether a given based edge loop contracts. The
+construction embeds an arbitrary finite connected flag complex and lifts the embedding to a
+retract in a connected cover. Its essential step is a map from the full packing complex into a
+level set of a right-angled Artin complex.
+\\[2mm]
+{\bf 2020 Mathematics Subject Classification:} 20F10 (primary), 05E45, 11A63 (secondary).
+\\[2mm]
+{\bf Keywords:} \manuscriptkeywords.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+Take \(a=73=1+2^3+2^6\). Two rows in its ordinary binary product collide exactly when their
+starting positions differ by 3 or 6. A seven-bit partner therefore selects at most one
+position in each class modulo 3. After fixing position 0, the remaining choices form a square
+with cycle \(1,2,4,5,1\). In the full space that square bounds a cone through 0. The full
+space consists of three cones on this same square, one for each of \(0,3,6\). It has the
+homotopy type of two 2-spheres joined at a point.
+
+For \(a>0\) of bit length \(L=N+1\), let \(P(a)\) be the simplicial complex on \(0,\ldots,N\)
+whose faces are supports of carry-free partners. Thus \(\sigma\) is a face exactly when the
+integer \(\sum_{i\in\sigma}2^i\) produces a carry-free ordinary product with \(a\). A flag
+complex consists of all cliques of a simple graph. \(P(a)\) is flag because two colliding rows
+already witness failure. In an edge loop of this space one can erase backtracks or cross a
+triangle, replacing an edge by two or conversely. These moves and constant steps give the
+usual based edge-path description of null-homotopy in a simplicial complex.
+
+\begin{theorem}\label{thm:universal}
+
+There exists a single odd positive integer \(a_*\) for which the fundamental group of a
+component of the full carry-free partner complex \(P(a_*)\) contains an isomorphic copy of
+every finitely presented group. There also exists one tile on one finite prime cycle such that
+its full packing complex is connected, vertex-transitive and has this same subgroup
+universality. In either host loop contraction has an undecidable word problem.
+\end{theorem}
+
+The difficulty can already be seen in the square for $a=73$. Prescribing which pairs of
+selected sites are compatible determines an induced subcomplex. An additional site can still
+cone off its loops, as position zero does for the square. The construction therefore needs two
+ingredients. First it encodes the cliques of a
+graph by integer differences, using the rigidity of three-term sums that underlies the Cayley
+graph constructions of Godsil and Rooney \cite{godsil}. It then constructs a map on
+\emph{every} simplex of the ambient space. On a particular lift this map recovers the original
+flag complex.
+
+\begin{theorem}\label{thm:realize}
+
+For every finite connected flag complex \(K\), given by its graph on \(v\) vertices, an odd
+\(a\) of polynomial bit length has an induced copy of \(K\) in \(P(a)\). In a connected
+covering of the component containing that copy, the copy lifts and is a topological retract.
+Hence the inclusion induces an injection on fundamental groups and on all higher homotopy
+groups. The construction and the inclusion of the labelled vertices take polynomial time in
+the explicit graph size.
+\end{theorem}
+
+Here and below, the topology of a simplicial complex means that of its geometric realization.
+The fundamental-group injection in Theorem~\ref{thm:realize} is stronger than the existence of
+an induced subcomplex. For the cyclic construction, translations of a single tile supply all
+the vertices of a connected complex.
+
+\section{Realizing forbidden differences by an odd multiplier}\label{sec:dist}
+
+For a positive binary integer \(a\), write \(S\) for the set of its occupied positions and
+\(L=1+\max S\) for its bit length. A partner is an integer \(0\le x<2^L\). Its occupied set
+\(X\) produces a carry-free product precisely when all sums \(s+x'\), with \(s\in S\) and
+\(x'\in X\), are distinct. Each carry reduces by one the number of units in the binary
+columns. Consequently this is also equivalent to
+\(\mathrm{wt}(ax)=\mathrm{wt}(a)\mathrm{wt}(x)\). Equivalently
+\(\Delta(S)\cap\Delta(X)=\varnothing\), where \(\Delta\) takes positive differences.
+
+\begin{proposition}\label{prop:dist}
+
+For every \(n\ge1\) and every \(D\subseteq\{1,\ldots,n\}\), one can deterministically
+construct an odd \(a\) and a stride \(m\ge2\), with \(mn\le L-1<m(n+1)\), such that the
+forbidden distances through \(L-1\) are exactly all nonmultiples of \(m\) together with \(mj\)
+for \(j\in D\). One can take \(m=O(n\log(2n))\) and \(L=O(n^2\log(2n))\). Every realization
+with stride at least two for \(D=\varnothing\) has \(m\ge2n\) and \(L\ge2n^2+1\).
+\end{proposition}
+
+\begin{proof}
+
+Put \(b=\lceil\log_2(2n)\rceil\), \(d=2b+1\), \(U=n(2d+2)\), and \(m=120U\). For every tag
+\(i=0,\ldots,2n-1\), its normalized pattern consists of \(0,d\) and exactly one of the two
+positions \(2k+1,2k+2\) for each \(0\le k<b\), according to bit \(k\) of \(i\). Put the
+pattern with tag \(2j\) at \(35U+j(2d+2)\) and that with tag \(2j+1\) at \(80U+j(2d+2)\), for
+\(0\le j<n\). Their union \(H\) is the set of holes in the bottom block of \(m\) positions.
+Each individual pattern has \(b+2\) elements and diameter \(d\). The gaps between different
+patterns, also around the cyclic boundary, exceed \(d\). All the low holes lie in
+\([35U,36U)\) and all the high holes in \([80U,81U)\).
+
+If translating all the positions of one pattern modulo \(m\) lands in \(H\), they must lie in
+a single pattern. Indeed an arc of length \(d\) meets points from at most one pattern. Equal
+cardinalities give equality with that pattern. The endpoints fix its relative origin, and the
+interior bits identify its tag. Thus the translation is zero modulo \(m\). The same proof uses
+integer lifts across the cyclic boundary, where the gap is greater than \(d\).
+
+Take all positions in block zero apart from \(H\). In block \(j=1,\ldots,n\) put precisely the
+two patterns with tags \(2(j-1)\) and \(2(j-1)+1\). Also put residue \(j\) in block \(j\) when
+\(j\in D\). Read this support as a binary integer. Its top position \(N=L-1\) is \(mn+g\),
+where \(g\) is the largest position of the high pattern in block \(n\). Each tag occurs in
+just one positive block. The spare residues \(1,\ldots,n\) are distinct and below every hole.
+Hence a positive multiple \(mj\) occurs as a difference exactly when the spare point for \(j\)
+is present. Position zero is present.
+
+For a nonmultiple \(s\) below \(m\), use the bottom positions \(0,s\) if \(s\notin H\).
+Otherwise \(s<81U\), so there are \(m-s>39U\) pairs \((v,v+s)\) in that block before deleting
+the holes. At most \(2|H|\) pairs are lost, and \(|H|=2n(b+2)\le U\). For a larger nonmultiple
+\(mj+s\le N\) with \(0<s<m\), use the following exhaustive cases.
+
+\begin{itemize}
+\item If \(s\le m/2\), subtract \(s\) from the high pattern of block \(j\). Its shifted residues are nonnegative. At least one is outside \(H\) by the translation property, producing the desired pair with block zero.
+\item If \(s>m/2\) and \(j<n\), use the low pattern in block \(j+1\). Its residues \(h\) satisfy \(h<s\). At least one \(m+h-s\) is outside \(H\), again producing the required difference.
+\item If \(s>m/2\) and \(j=n\), then \(s\le g<81U\). The residue \(g-s\) belongs to \([0,21U)\), which has no holes. It pairs with the highest position \(N\).
+\end{itemize}
+
+This constructs the support in polynomial time in the explicit distance-list length \(n\). For
+the lower bound choose \(D=\varnothing\). Each of the \(m\) residues holds at most one support
+point, because equal residues would give a forbidden multiple in the source difference set.
+All \(n(m-1)\) nonmultiples through \(mn\) must occur as positive differences. At most
+\(\binom m2\) pairs can supply them. Cancelling \(m-1>0\) gives \(m\ge2n\). The factor
+\(\log(2n)\) between the two width bounds remains open for general realizations.
+\end{proof}
+
+\section{Labelling the simplices}\label{sec:charts}
+
+Choose increasing integer marks \(0=s_0<\cdots<s_{v-1}=n\) with unique sums of three marks as
+unordered multisets, allowing repetitions. This is a $B_3$ set. For at least two vertices one
+can use marks in range \(O(v^3)\). Take a prime \(p>\max(v,3)\) of order \(O(v)\), and encode
+\(i,i^2\bmod p,i^3\bmod p\) as the digits of an integer in base \(3p\). Three digits add
+without carrying. Newton's identities over \(\mathbb F_p\) determine the three elementary
+symmetric functions and hence all three roots with multiplicity. Sort and translate the
+labels. A single-vertex target is immediate. Allow the positive differences \(s_j-s_i\) of
+graph edges and forbid all other logical distances in \([1,n]\). Proposition~\ref{prop:dist}
+constructs an odd \(a\) and \(m\ge2\) with \(mn\le N<m(n+1)\). Its available physical
+distances are precisely the allowed logical distances times \(m\). Its width is
+\(O(n^2\log(2n))\), hence \(O(v^6\log(2v))\). The points \(ms_i\) induce the given flag
+complex.
+
+\begin{lemma}\label{lem:charts}
+
+Every simplex with at least three vertices lies in a unique translated or reflected labelled
+chart. Thus its vertices have the form $b+\varepsilon m s_i$ for a uniquely determined
+orientation $\varepsilon\in\{-1,1\}$, translation $b$, and set of labels $i$. The labels span
+a clique of the given graph. On an edge there are two descriptions, with the endpoint labels
+interchanged.
+\end{lemma}
+
+\begin{proof}
+
+Subtract the least site and divide by \(m\). Each nonzero offset has a unique directed label
+pair \((h,t)\) for \(s_h-s_t\), by triple uniqueness with padding. If a second offset has pair
+\((p,q)\), their difference is a directed graph edge \(s_c-s_d\). Equating triple sums gives
+\(\{h,q,d\}=\{t,p,c\}\). Thus the pairs share their head or their tail. If two heads differ
+they have the same tail, and a third pair with a different tail could not share both heads.
+Distinct offsets exclude agreement of both coordinates. The common coordinate fixes
+orientation, base label and translation. Pair-difference uniqueness identifies graph adjacency
+for every pair of recovered labels. A physical edge has one labelling in each orientation,
+with its labels interchanged between the two. These statements include clipped charts at the
+endpoints.
+\end{proof}
+
+\section{A retraction in a connected cover}\label{sec:cover}
+
+\begin{proof}[Proof of Theorem~\ref{thm:realize}]
+
+Let \(S_K\) be the union in \((\mathbb R/\mathbb Z)^v\) of the coordinate tori belonging to
+faces of \(K\). This is the right-angled Artin Salvetti complex. Its height map to the circle
+adds all coordinates. Construct a continuous map \(\Phi:P(a)\to S_K\). Send all vertices to
+the torus basepoint. On a positive chart simplex send barycentric weights \(\lambda_i\) to the
+vector of their coordinates modulo one, and on a negative chart use \(-\lambda_i\). Every
+image belongs to the torus of a face. On a shared edge the other orientation swaps its two
+labels. The coordinates \((\lambda,1-\lambda)\) and \((-(1-\lambda),-\lambda)\) agree modulo
+one. On a single edge either prescription therefore works. Higher shared faces have unique
+charts, so these maps glue. All images have circle height zero because the signed sum of the
+weights is \(1\) or \(-1\).
+
+The vertex link of the cubical complex \(S_K\) is the signed copy of \(K\). To form a simplex
+in this link, choose a sign for each member of a clique and choose at most one sign of each
+generator. This link is flag. By the cubical link condition and the Cartan--Hadamard theorem
+\cite[Chapters II.4--II.5]{bh} the universal cover \(X\) of \(S_K\), given its unit Euclidean
+cubes, is CAT(0). Choose a vertex \(o\) at real height zero for the lifted height. At \(o\),
+the outgoing positive cubes contain the simplex of nonnegative coordinates summing to one for
+each clique. Gluing those simplices gives an embedded copy \(K_+\) at height one. It lifts
+\(\Phi\) on the entire chosen positive chart, including every loop of that chart.
+
+The level set of real height one admits a map back to \(K_+\) fixing \(K_+\) pointwise. From a
+level-one point take the direction of the unique geodesic from \(o\). This direction lies in
+the signed vertex link. To see continuity, height is \(\sqrt v\)-Lipschitz on each unit cube
+and hence on the length metric, so every level-one point is at least \(1/\sqrt v\) from \(o\).
+Intersect its geodesic with one fixed smaller sphere inside the cubical star. CAT(0) geodesics
+depend continuously on their endpoint. In the resulting signed spherical simplex, forget the
+signs and divide the nonnegative direction coordinates by their sum. This is compatible on all
+common faces and gives a point of \(K_+\). For a point of \(K_+\) the initial geodesic runs
+straight in its positive cube, so this operation returns the original barycentric weights.
+
+Pull back the covering \(X\to S_K\) along \(\Phi\). The connected component containing the
+chosen lift of \(K\) maps into real height one, since its height is continuous and
+integer-valued there. Compose this map with the preceding radial map and identify \(K_+\) with
+the lifted chart. The composite is a retraction. A covering induces an injection on
+fundamental groups and isomorphisms on higher homotopy groups. In particular a target loop is
+null in the full arithmetic complex exactly when it is null in \(K\).
+\end{proof}
+
+\section{The packing complex of one tile on a prime cycle}\label{sec:prime}
+
+On a circle of \(Q\) labelled sites, choose one nonempty tile \(S\subset\mathbb Z/Q\). A face
+is a set of centres whose translates of \(S\) are pairwise disjoint. All translations are
+available. Two distinct centres are incompatible exactly when their difference belongs to
+\(S-S\).
+
+\begin{lemma}\label{lem:tile}
+
+Suppose \(A=-A\) is a set of \(\Delta\) nonzero residues and
+\[
+ Q\exp\{-Q/[64(\Delta+1)^4]\}<1 .
+\]
+A deterministic algorithm polynomial in \(Q\) constructs a tile with \((S-S)\setminus\{0\}\)
+exactly the complement of \(A\) among nonzero residues.
+\end{lemma}
+
+\begin{proof}
+
+On the cycle graph with edge differences \(A\), independently mark sites with probability
+\(p=1/(2(\Delta+1))\). Retain only the marked sites with no marked neighbour. These retained
+sites give a tile avoiding \(A\). Fix a nonzero \(d\notin A\). The event that \(x,x+d\) are
+both retained depends only on their two closed neighbourhoods, a translate of a set \(U\) of
+size at most \(2(\Delta+1)\). Greedily choose disjoint translates of \(U\). Each choice rules
+out at most \(|U-U|\le4(\Delta+1)^2\) starting positions, so at least \(Q/[4(\Delta+1)^2]\)
+can be chosen. Each event requires two specified marks and no marks on at most \(2\Delta\)
+other sites. Its probability is at least \(p^2(1-p)^{2\Delta}\ge 1/[16(\Delta+1)^2]\), using
+\((1-p)^\Delta\ge1-\Delta p\ge1/2\). Distinct tests for this \(d\) are independent. The
+probability all fail is at most the exponential in the displayed inequality. Summing over the
+required differences gives an expected number of failed test families below one.
+
+To construct the tile, fix these families before assigning bits. Condition on one additional
+mark at a time, choosing the value with smaller conditional expected number of failed
+families. For each \(d\) this expectation uses the product of the conditional failure
+probabilities on its disjoint neighbourhoods. Each success probability is zero when a fixed
+bit contradicts it and otherwise is \(p^u(1-p)^w\) for the remaining prescribed ones and
+zeros. Rational arithmetic is polynomial in \(Q\). A common denominator for a family's
+conditional failure probability divides \((2(\Delta+1))^Q\) because its tested sets are
+disjoint. The final integral number of failures is zero. This supplies the advertised
+deterministic tile.
+\end{proof}
+
+\begin{theorem}\label{thm:tile}
+
+For every finite connected flag complex $K$ with an edge, there are a prime $Q$ and a tile in
+$\mathbb Z/Q\mathbb Z$ such that its full translate-packing complex is connected and
+vertex-transitive. It contains an induced copy of $K$ that lifts to a retract in a connected
+cover. On $v$ vertices one can take $Q=O(v^8\log(2v))$ and construct the tile in polynomial
+time.
+\end{theorem}
+
+\begin{proof}
+
+Choose the triple-unique marks of the one-skeleton \(H\) of \(K\) and let \(n\) be their span. Choose a
+prime \(Q>3n\) large enough for the displayed bound with \(\Delta=2|E(H)|\). One may take
+\(Q=O(v^8\log(2v))\) for \(v\ge2\) vertices by Bertrand's postulate. Allow the positive and
+negative residues of the graph's marked edge differences. They are distinct, and equality of
+two triple sums modulo \(Q\) implies integer equality. Directed differences from any base site
+therefore satisfy the same common-tail or common-head proof as in the interval. Every face of
+size at least three determines its unique translated or reflected chart, including which
+labels occur. On an edge the two labellings interchange endpoints. The height map and covering
+retraction of the preceding theorem apply to the full cyclic packing complex for exactly these
+reasons. For a graph containing an edge its physical packing graph is connected, since a
+nonzero step generates the prime cycle. It is vertex-transitive by cyclic translations.
+\end{proof}
+
+\section{A fixed host and its word problem}\label{sec:host}
+
+\begin{proof}[Proof of Theorem~\ref{thm:universal}]
+
+Higman proved that there is a finitely presented group $U$ containing an isomorphic copy of
+every finitely presented group \cite{higman}. Choose a finite connected simplicial complex
+with fundamental group $U$. For example, realize the generators by circles, subdivide each
+relator loop into edges, and attach its disc along a triangulated mapping cylinder.
+Barycentric subdivision gives a finite flag complex $K$ with the same fundamental group.
+
+Apply Theorems~\ref{thm:realize} and~\ref{thm:tile} to this one $K$. In both cases the
+injection of $\pi_1(K)$ into the ambient fundamental group embeds $U$ and hence every finitely
+presented group. In particular it embeds a fixed finitely presented group with unsolvable word
+problem \cite{boone}. Represent the images of its finitely many generators by fixed based edge
+loops. Concatenation turns any word into a loop in the fixed host, where it contracts
+precisely when the word is trivial. A decision procedure for these loops would decide the word
+problem in that group.
+\end{proof}
+
+The distinction between an embedding and a retraction restricts possible strengthenings. A
+retract of a group generated by \(d\) elements is generated by their \(d\) images. One fixed
+finite host cannot therefore have every \(\mathbb Z^r\) as a retract of its own fundamental
+group. Also, on a prime cycle of order \(Q\), every nonempty proper face has translation orbit
+of size \(Q\). A full packing complex other than the full simplex has Euler characteristic
+divisible by \(Q\). For example \(\mathbb{RP}^2\), with Euler characteristic one and
+nontrivial fundamental group, cannot be the exact homotopy type of any full prime-cycle
+packing complex. It remains open here whether one can prescribe the entire fundamental group
+by varying the tile, or always choose a finite cover in the retraction theorem.
+
+\section*{AI Assistance Disclosure}
+
+OpenAI's GPT-6.2 Astra was used in an autoresearch loop and reported this discovery to the author.
+
+\begingroup\small
+\begin{thebibliography}{9}
+\bibitem{godsil}
+C. Godsil and B. Rooney, \emph{Hardness of computing clique number and chromatic number for
+Cayley graphs}. \href{https://arxiv.org/abs/1502.00965}{arXiv:1502.00965}.
+
+\bibitem{bh}
+M. R. Bridson and A. Haefliger, \emph{Metric Spaces of Non-Positive Curvature}, Grundlehren
+der mathematischen Wissenschaften 319, Springer, 1999.
+\href{https://doi.org/10.1007/978-3-662-12494-9}{doi:10.1007/978-3-662-12494-9}.
+
+\bibitem{higman}
+G. Higman, \emph{Subgroups of finitely presented groups}, Proceedings of the Royal Society of
+London, Series A \textbf{262} (1961), 455--475.
+\href{https://doi.org/10.1098/rspa.1961.0132}{doi:10.1098/rspa.1961.0132}.
+
+\bibitem{boone}
+W. W. Boone, \emph{The word problem}, Annals of Mathematics \textbf{70} (1959), 207--265.
+\href{https://doi.org/10.2307/1970103}{doi:10.2307/1970103}.
+\end{thebibliography}
+\endgroup
+
+\end{document}
